@@ -6,45 +6,44 @@
 <title>Pancho de Bagé</title>
 
 <style>
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
 
 body {
-  font-family: Arial, sans-serif;
   margin: 0;
+  font-family: Arial, sans-serif;
   background: #fff8f0;
 }
 
 header {
   background: #b71c1c;
-  color: #fff;
+  color: white;
   padding: 25px;
   text-align: center;
 }
 
-.container {
+section {
   padding: 20px;
-  max-width: 1200px;
+  max-width: 1100px;
   margin: auto;
 }
 
-.section {
-  margin-bottom: 30px;
+h2 {
+  margin-top: 30px;
 }
 
-.items {
+.grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 15px;
 }
 
 .item {
-  background: #fff;
+  background: white;
   padding: 15px;
   border-radius: 10px;
   box-shadow: 0 3px 8px rgba(0,0,0,.1);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
 }
 
 .price {
@@ -52,11 +51,13 @@ header {
   color: #2e7d32;
 }
 
-button {
-  background: #b71c1c;
-  color: #fff;
-  border: none;
+.item button {
+  margin-top: 10px;
+  width: 100%;
   padding: 10px;
+  background: #b71c1c;
+  color: white;
+  border: none;
   border-radius: 6px;
   cursor: pointer;
 }
@@ -66,23 +67,25 @@ button {
   bottom: 20px;
   right: 20px;
   background: #2e7d32;
-  color: #fff;
+  color: white;
   padding: 15px 18px;
   border-radius: 50px;
+  border: none;
+  cursor: pointer;
   z-index: 1000;
 }
 
-.cart-panel {
+.cart {
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
-  max-height: 75vh;
-  background: #fff;
-  border-radius: 20px 20px 0 0;
+  background: white;
   padding: 20px;
+  border-radius: 20px 20px 0 0;
   box-shadow: 0 -4px 15px rgba(0,0,0,.3);
   display: none;
+  max-height: 70vh;
   overflow-y: auto;
   z-index: 1001;
 }
@@ -107,19 +110,11 @@ button {
   width: 100%;
   background: #2e7d32;
   padding: 14px;
+  border: none;
   border-radius: 8px;
   margin-top: 10px;
-}
-
-/* 📱 CELULAR */
-@media (max-width: 600px) {
-  header h1 { font-size: 22px; }
-  .cart-btn { padding: 12px 15px; }
-}
-
-/* 📱 TABLET */
-@media (min-width: 601px) and (max-width: 1024px) {
-  header h1 { font-size: 24px; }
+  color: white;
+  cursor: pointer;
 }
 </style>
 </head>
@@ -127,79 +122,73 @@ button {
 <body>
 
 <header>
-<h1>🌭 Pancho de Bagé</h1>
-<p>Preço, sabor e qualidade</p>
+  <h1>🌭 Pancho de Bagé</h1>
+  <p>Preço, sabor e qualidade</p>
 </header>
 
-<div class="container">
+<section>
+  <h2>Panchos</h2>
+  <div class="grid">
+    <div class="item">
+      <h3>Pancho Tradicional</h3>
+      <p class="price">R$ 18,00</p>
+      <button onclick="addItem('Pancho Tradicional',18)">Adicionar</button>
+    </div>
 
-<div class="section">
-<h2>Panchos</h2>
-<div class="items">
-  <div class="item">
-    <h3>Pancho Tradicional</h3>
-    <p class="price">R$ 18,00</p>
-    <button onclick="addItem('Pancho Tradicional',18)">Adicionar</button>
+    <div class="item">
+      <h3>Pancho Mega</h3>
+      <p class="price">R$ 20,00</p>
+      <button onclick="addItem('Pancho Mega',20)">Adicionar</button>
+    </div>
+
+    <div class="item">
+      <h3>Pancho Bacon e Calabresa</h3>
+      <p class="price">R$ 22,00</p>
+      <button onclick="addItem('Pancho Bacon e Calabresa',22)">Adicionar</button>
+    </div>
+
+    <div class="item">
+      <h3>Pancho Coração</h3>
+      <p class="price">R$ 24,00</p>
+      <button onclick="addItem('Pancho Coração',24)">Adicionar</button>
+    </div>
   </div>
 
-  <div class="item">
-    <h3>Pancho Mega</h3>
-    <p class="price">R$ 20,00</p>
-    <button onclick="addItem('Pancho Mega',20)">Adicionar</button>
-  </div>
+  <h2>Bebidas</h2>
+  <div class="grid">
+    <div class="item">
+      <h3>Coca-Cola</h3>
+      <p class="price">R$ 6,00</p>
+      <button onclick="addItem('Coca-Cola',6)">Adicionar</button>
+    </div>
 
-  <div class="item">
-    <h3>Pancho Bacon e Calabresa</h3>
-    <p class="price">R$ 22,00</p>
-    <button onclick="addItem('Pancho Bacon e Calabresa',22)">Adicionar</button>
-  </div>
+    <div class="item">
+      <h3>Coca-Cola Zero</h3>
+      <p class="price">R$ 6,00</p>
+      <button onclick="addItem('Coca-Cola Zero',6)">Adicionar</button>
+    </div>
 
-  <div class="item">
-    <h3>Pancho Coração</h3>
-    <p class="price">R$ 24,00</p>
-    <button onclick="addItem('Pancho Coração',24)">Adicionar</button>
-  </div>
-</div>
-</div>
+    <div class="item">
+      <h3>Fruki</h3>
+      <p class="price">R$ 5,00</p>
+      <button onclick="addItem('Fruki',5)">Adicionar</button>
+    </div>
 
-<div class="section">
-<h2>Bebidas</h2>
-<div class="items">
-  <div class="item">
-    <h3>Coca-Cola</h3>
-    <p class="price">R$ 6,00</p>
-    <button onclick="addItem('Coca-Cola',6)">Adicionar</button>
+    <div class="item">
+      <h3>Água Mineral</h3>
+      <p class="price">R$ 4,00</p>
+      <button onclick="addItem('Água Mineral',4)">Adicionar</button>
+    </div>
   </div>
-
-  <div class="item">
-    <h3>Coca-Cola Zero</h3>
-    <p class="price">R$ 6,00</p>
-    <button onclick="addItem('Coca-Cola Zero',6)">Adicionar</button>
-  </div>
-
-  <div class="item">
-    <h3>Fruki</h3>
-    <p class="price">R$ 5,00</p>
-    <button onclick="addItem('Fruki',5)">Adicionar</button>
-  </div>
-
-  <div class="item">
-    <h3>Água Mineral</h3>
-    <p class="price">R$ 4,00</p>
-    <button onclick="addItem('Água Mineral',4)">Adicionar</button>
-  </div>
-</div>
-</div>
-
-</div>
+</section>
 
 <button class="cart-btn" onclick="openCart()">🛒 Carrinho</button>
 
-<div class="cart-panel" id="cartPanel">
-<button onclick="closeCart()">❌ Fechar</button>
-<div id="cart-items"></div>
-<div class="total" id="total"></div>
-<button class="finalizar" onclick="sendOrder()">Finalizar pedido pelo WhatsApp</button>
+<div class="cart" id="cart">
+  <button onclick="closeCart()">❌ Fechar</button>
+  <div id="cart-items"></div>
+  <div class="total" id="total"></div>
+  <button class="finalizar" onclick="sendOrder()">Finalizar pedido pelo WhatsApp</button>
 </div>
 
 <script>
@@ -208,7 +197,7 @@ let cart = [];
 function addItem(name, price) {
   let item = cart.find(i => i.name === name);
   if (item) item.qty++;
-  else cart.push({name, price, qty:1});
+  else cart.push({name, price, qty: 1});
   renderCart();
 }
 
@@ -216,19 +205,21 @@ function removeItem(name) {
   let item = cart.find(i => i.name === name);
   if (!item) return;
   item.qty--;
-  if (item.qty <= 0) cart = cart.filter(i => i.name !== name);
+  if (item.qty <= 0) {
+    cart = cart.filter(i => i.name !== name);
+  }
   renderCart();
 }
 
 function renderCart() {
-  let div = document.getElementById("cart-items");
+  let items = document.getElementById("cart-items");
   let totalDiv = document.getElementById("total");
-  div.innerHTML = "";
+  items.innerHTML = "";
   let total = 0;
 
   cart.forEach(i => {
     total += i.price * i.qty;
-    div.innerHTML += `
+    items.innerHTML += `
       <div class="cart-item">
         <span>${i.qty}x ${i.name}</span>
         <div class="cart-controls">
@@ -238,20 +229,20 @@ function renderCart() {
       </div>`;
   });
 
-  if(cart.length === 0) div.innerHTML = "🛒 Carrinho vazio";
-  totalDiv.innerHTML = "Total: R$ " + total.toFixed(2);
+  items.innerHTML = items.innerHTML || "🛒 Carrinho vazio";
+  totalDiv.innerText = "Total: R$ " + total.toFixed(2);
 }
 
 function openCart() {
-  document.getElementById("cartPanel").style.display = "block";
+  document.getElementById("cart").style.display = "block";
 }
 
 function closeCart() {
-  document.getElementById("cartPanel").style.display = "none";
+  document.getElementById("cart").style.display = "none";
 }
 
 function sendOrder() {
-  if(cart.length === 0){
+  if (cart.length === 0) {
     alert("Adicione itens ao pedido");
     return;
   }
@@ -264,7 +255,7 @@ function sendOrder() {
   let total = cart.reduce((s,i)=>s+i.price*i.qty,0);
   msg += `%0ATotal: R$ ${total.toFixed(2)}`;
 
-  window.open("https://wa.me/5553999021357?text="+msg,"_blank");
+  window.open("https://wa.me/5553999021357?text=" + msg, "_blank");
 }
 </script>
 
