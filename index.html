@@ -8,92 +8,59 @@
 <style>
 * { box-sizing: border-box; }
 body { margin: 0; font-family: Arial, sans-serif; background: #fff8f0; }
-header { background: #b71c1c; color: white; padding: 25px; text-align: center; }
+header { background: #b71c1c; color: white; padding: 22px; text-align: center; }
 section { padding: 20px; max-width: 1100px; margin: auto; }
 h2 { margin-top: 30px; }
 
 .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 15px; }
-
 .item { background: white; padding: 15px; border-radius: 10px; box-shadow: 0 3px 8px rgba(0,0,0,.1); }
 .price { font-weight: bold; color: #2e7d32; }
 
 .item button {
-  margin-top: 10px;
-  width: 100%;
-  padding: 10px;
-  background: #b71c1c;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
+  margin-top: 10px; width: 100%; padding: 10px;
+  background: #b71c1c; color: white; border: none; border-radius: 6px; cursor: pointer;
 }
 .item button:disabled { background: #9e9e9e; cursor: not-allowed; }
 
 .badge {
-  display: inline-block;
-  padding: 6px 10px;
-  border-radius: 999px;
-  font-size: 12px;
-  font-weight: bold;
-  margin-top: 8px;
+  display: inline-block; padding: 6px 10px; border-radius: 999px;
+  font-size: 12px; font-weight: bold; margin-top: 8px;
 }
 .badge.ok { background: #e8f5e9; color: #1b5e20; }
 .badge.closed { background: #ffebee; color: #b71c1c; }
 .badge.soldout { background: #eeeeee; color: #424242; }
+.badge.low { background: #fff3e0; color: #e65100; }
 
 .notice {
-  margin: 12px auto 0;
-  max-width: 1100px;
-  padding: 12px 14px;
-  border-radius: 10px;
-  background: #fff;
+  margin: 12px auto 0; max-width: 1100px;
+  padding: 12px 14px; border-radius: 10px; background: #fff;
   box-shadow: 0 3px 8px rgba(0,0,0,.08);
   border-left: 6px solid #b71c1c;
 }
 
 .cart-btn {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background: #2e7d32;
-  color: white;
-  padding: 15px 18px;
-  border-radius: 50px;
-  border: none;
-  cursor: pointer;
-  z-index: 1000;
+  position: fixed; bottom: 20px; right: 20px;
+  background: #2e7d32; color: white;
+  padding: 15px 18px; border-radius: 50px; border: none;
+  cursor: pointer; z-index: 1000;
 }
 .cart-btn:disabled { background: #9e9e9e; cursor: not-allowed; }
 
 .cart {
-  position: fixed;
-  bottom: 0; left: 0; right: 0;
-  background: white;
-  padding: 20px;
+  position: fixed; bottom: 0; left: 0; right: 0;
+  background: white; padding: 20px;
   border-radius: 20px 20px 0 0;
   box-shadow: 0 -4px 15px rgba(0,0,0,.3);
-  display: none;
-  max-height: 82vh;
-  overflow-y: auto;
-  z-index: 1001;
+  display: none; max-height: 82vh; overflow-y: auto; z-index: 1001;
 }
-
 .cart h3 { margin: 10px 0; }
-
 .cart-item { display: flex; justify-content: space-between; margin-bottom: 10px; gap: 10px; }
 .cart-controls button { padding: 4px 8px; margin-left: 4px; }
-
 .total { font-weight: bold; margin-top: 10px; }
 
 .finalizar {
-  width: 100%;
-  background: #2e7d32;
-  padding: 14px;
-  border: none;
-  border-radius: 8px;
-  margin-top: 10px;
-  color: white;
-  cursor: pointer;
+  width: 100%; background: #2e7d32; padding: 14px; border: none;
+  border-radius: 8px; margin-top: 10px; color: white; cursor: pointer;
 }
 .finalizar:disabled { background: #9e9e9e; cursor: not-allowed; }
 
@@ -101,29 +68,54 @@ h2 { margin-top: 30px; }
 .form-grid.two { grid-template-columns: 1fr; }
 label { font-size: 14px; font-weight: bold; }
 input, select, textarea {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  font-size: 14px;
+  width: 100%; padding: 10px; border: 1px solid #ddd;
+  border-radius: 8px; font-size: 14px;
 }
 textarea { min-height: 90px; resize: vertical; }
 .helper { font-size: 12px; color: #555; margin-top: -6px; }
 .hidden { display: none; }
 
-@media (min-width: 700px) {
-  .form-grid.two { grid-template-columns: 1fr 1fr; }
+@media (min-width: 700px) { .form-grid.two { grid-template-columns: 1fr 1fr; } }
+
+/* ===== Painel Admin ===== */
+.admin-overlay{
+  position: fixed; inset: 0; background: rgba(0,0,0,.45);
+  display:none; align-items: flex-end; justify-content: center; z-index: 2000;
 }
+.admin-panel{
+  width: min(900px, 100%);
+  background: #fff; border-radius: 18px 18px 0 0;
+  padding: 16px; max-height: 85vh; overflow: auto;
+}
+.admin-top{
+  display:flex; justify-content: space-between; align-items:center; gap:10px;
+}
+.admin-top h3{ margin: 8px 0; }
+.admin-row{
+  display:grid; grid-template-columns: 1.2fr .7fr .7fr; gap:10px;
+  padding: 10px 0; border-bottom: 1px solid #eee; align-items:center;
+}
+.admin-row small{ color:#666; }
+.admin-actions{ display:flex; gap:10px; }
+.admin-actions button{
+  border:none; border-radius:10px; padding:10px 12px; cursor:pointer;
+}
+.btn-save{ background:#2e7d32; color:#fff; }
+.btn-close{ background:#b71c1c; color:#fff; }
+.btn-reset{ background:#9e9e9e; color:#fff; }
 </style>
 </head>
 
 <body>
 
-<header>
+<header id="hdr">
   <h1>🌭 Pancho de Bagé</h1>
   <p>Preço, sabor e qualidade</p>
   <div id="status-badge" class="badge ok">🟢 Aberto</div>
   <div style="font-size:12px;opacity:.9;margin-top:6px" id="hours-text"></div>
+  <div style="font-size:11px;opacity:.75;margin-top:6px">
+    (Dica: toque 5x no título para abrir o painel)
+  </div>
 </header>
 
 <div class="notice" id="notice" style="display:none;"></div>
@@ -134,28 +126,28 @@ textarea { min-height: 90px; resize: vertical; }
     <div class="item">
       <h3>Pancho Tradicional</h3>
       <p class="price">R$ 18,00</p>
-      <div id="soldout-pancho_tradicional" class="badge soldout" style="display:none;">ESGOTADO</div>
+      <div id="tag-pancho_tradicional"></div>
       <button id="btn-pancho_tradicional" onclick="addItem('Pancho Tradicional',18,'pancho_tradicional')">Adicionar</button>
     </div>
 
     <div class="item">
       <h3>Pancho Mega</h3>
       <p class="price">R$ 20,00</p>
-      <div id="soldout-pancho_mega" class="badge soldout" style="display:none;">ESGOTADO</div>
+      <div id="tag-pancho_mega"></div>
       <button id="btn-pancho_mega" onclick="addItem('Pancho Mega',20,'pancho_mega')">Adicionar</button>
     </div>
 
     <div class="item">
       <h3>Pancho Bacon e Calabresa</h3>
       <p class="price">R$ 22,00</p>
-      <div id="soldout-pancho_bacon_calabresa" class="badge soldout" style="display:none;">ESGOTADO</div>
+      <div id="tag-pancho_bacon_calabresa"></div>
       <button id="btn-pancho_bacon_calabresa" onclick="addItem('Pancho Bacon e Calabresa',22,'pancho_bacon_calabresa')">Adicionar</button>
     </div>
 
     <div class="item">
       <h3>Pancho Coração</h3>
       <p class="price">R$ 24,00</p>
-      <div id="soldout-pancho_coracao" class="badge soldout" style="display:none;">ESGOTADO</div>
+      <div id="tag-pancho_coracao"></div>
       <button id="btn-pancho_coracao" onclick="addItem('Pancho Coração',24,'pancho_coracao')">Adicionar</button>
     </div>
   </div>
@@ -165,28 +157,28 @@ textarea { min-height: 90px; resize: vertical; }
     <div class="item">
       <h3>Coca-Cola</h3>
       <p class="price">R$ 6,00</p>
-      <div id="soldout-coca" class="badge soldout" style="display:none;">ESGOTADO</div>
+      <div id="tag-coca"></div>
       <button id="btn-coca" onclick="addItem('Coca-Cola',6,'coca')">Adicionar</button>
     </div>
 
     <div class="item">
       <h3>Coca-Cola Zero</h3>
       <p class="price">R$ 6,00</p>
-      <div id="soldout-coca_zero" class="badge soldout" style="display:none;">ESGOTADO</div>
+      <div id="tag-coca_zero"></div>
       <button id="btn-coca_zero" onclick="addItem('Coca-Cola Zero',6,'coca_zero')">Adicionar</button>
     </div>
 
     <div class="item">
       <h3>Fruki</h3>
       <p class="price">R$ 5,00</p>
-      <div id="soldout-fruki" class="badge soldout" style="display:none;">ESGOTADO</div>
+      <div id="tag-fruki"></div>
       <button id="btn-fruki" onclick="addItem('Fruki',5,'fruki')">Adicionar</button>
     </div>
 
     <div class="item">
       <h3>Água Mineral</h3>
       <p class="price">R$ 4,00</p>
-      <div id="soldout-agua" class="badge soldout" style="display:none;">ESGOTADO</div>
+      <div id="tag-agua"></div>
       <button id="btn-agua" onclick="addItem('Água Mineral',4,'agua')">Adicionar</button>
     </div>
   </div>
@@ -259,51 +251,102 @@ textarea { min-height: 90px; resize: vertical; }
   <button id="finalizarBtn" class="finalizar" onclick="sendOrder()">Finalizar pedido pelo WhatsApp</button>
 </div>
 
+<!-- ====== Painel Admin escondido ====== -->
+<div class="admin-overlay" id="adminOverlay">
+  <div class="admin-panel">
+    <div class="admin-top">
+      <h3>🔒 Painel do dono (Estoque / Esgotado)</h3>
+      <div class="admin-actions">
+        <button class="btn-reset" onclick="resetAdmin()">Restaurar padrão</button>
+        <button class="btn-close" onclick="closeAdmin()">Fechar</button>
+      </div>
+    </div>
+    <p style="margin-top:0;color:#555;font-size:13px">
+      Dica: coloque <b>estoque = 0</b> para esgotar. Se estoque ≤ <b>2</b>, aparece “Últimas unidades”.
+    </p>
+
+    <div id="adminList"></div>
+
+    <button class="btn-save" style="width:100%;margin-top:12px" onclick="saveAdmin()">Salvar alterações</button>
+    <p style="color:#777;font-size:12px;margin-bottom:0">
+      Observação: as alterações ficam salvas neste aparelho/navegador.
+    </p>
+  </div>
+</div>
+
 <script>
 /* =========================
-   CONFIGURAÇÃO (EDITE AQUI)
+   CONFIGURAÇÃO
    ========================= */
 
-/**
- * Horário de funcionamento por dia da semana
- * 0=Dom, 1=Seg, 2=Ter, 3=Qua, 4=Qui, 5=Sex, 6=Sáb
- * Use formato 24h: "18:00"
- */
+// Horário de funcionamento por dia da semana (0=Dom ... 6=Sáb)
 const HORARIOS = {
-  0: { abre: "18:00", fecha: "23:00" }, // Domingo
-  1: { abre: "18:00", fecha: "23:00" }, // Segunda
-  2: { abre: "18:00", fecha: "23:00" }, // Terça
-  3: { abre: "18:00", fecha: "23:00" }, // Quarta
-  4: { abre: "18:00", fecha: "23:00" }, // Quinta
-  5: { abre: "18:00", fecha: "23:59" }, // Sexta (exemplo)
-  6: { abre: "18:00", fecha: "23:59" }  // Sábado (exemplo)
+  0: { abre: "18:00", fecha: "23:00" },
+  1: { abre: "18:00", fecha: "23:00" },
+  2: { abre: "18:00", fecha: "23:00" },
+  3: { abre: "18:00", fecha: "23:00" },
+  4: { abre: "18:00", fecha: "23:00" },
+  5: { abre: "18:00", fecha: "23:59" },
+  6: { abre: "18:00", fecha: "23:59" }
 };
 
-/**
- * Marcar itens como "ESGOTADO"
- * true  = esgotado (desativa o botão e mostra etiqueta)
- * false = disponível
- */
-const ESGOTADO = {
-  pancho_tradicional: false,
-  pancho_mega: false,
-  pancho_bacon_calabresa: false,
-  pancho_coracao: false,
-  coca: false,
-  coca_zero: false,
-  fruki: false,
-  agua: false
-};
-
-// WhatsApp do negócio
 const WHATSAPP_NUMERO = "5553999021357";
 
+// Itens do cardápio (chave -> nome/valor)
+const ITEMS = {
+  pancho_tradicional: { nome: "Pancho Tradicional", preco: 18 },
+  pancho_mega: { nome: "Pancho Mega", preco: 20 },
+  pancho_bacon_calabresa: { nome: "Pancho Bacon e Calabresa", preco: 22 },
+  pancho_coracao: { nome: "Pancho Coração", preco: 24 },
+  coca: { nome: "Coca-Cola", preco: 6 },
+  coca_zero: { nome: "Coca-Cola Zero", preco: 6 },
+  fruki: { nome: "Fruki", preco: 5 },
+  agua: { nome: "Água Mineral", preco: 4 }
+};
+
+// Padrão de estoque (você pode mudar aqui também)
+const DEFAULT_STOCK = {
+  pancho_tradicional: 50,
+  pancho_mega: 50,
+  pancho_bacon_calabresa: 50,
+  pancho_coracao: 50,
+  coca: 50,
+  coca_zero: 50,
+  fruki: 50,
+  agua: 50
+};
+
+// Quando mostrar “Últimas unidades”
+const LIMIAR_ULTIMAS = 2;
+
+// Senha do painel (mude para a sua)
+const ADMIN_SENHA = "1234";
+
 /* =========================
-   LÓGICA DO CARRINHO + PEDIDO
+   ESTOQUE: localStorage
    ========================= */
+const STOCK_KEY = "pancho_stock_v1";
 
-let cart = [];
+function loadStock() {
+  try {
+    const saved = localStorage.getItem(STOCK_KEY);
+    if (!saved) return { ...DEFAULT_STOCK };
+    const obj = JSON.parse(saved);
+    return { ...DEFAULT_STOCK, ...obj };
+  } catch {
+    return { ...DEFAULT_STOCK };
+  }
+}
 
+function saveStock(obj) {
+  localStorage.setItem(STOCK_KEY, JSON.stringify(obj));
+}
+
+let stock = loadStock();
+
+/* =========================
+   HORÁRIO (aberto/fechado)
+   ========================= */
 function timeToMinutes(hhmm) {
   const [h, m] = hhmm.split(":").map(Number);
   return (h * 60) + m;
@@ -311,7 +354,7 @@ function timeToMinutes(hhmm) {
 
 function getTodaySchedule() {
   const d = new Date();
-  const dow = d.getDay(); // 0-6
+  const dow = d.getDay();
   return HORARIOS[dow] || null;
 }
 
@@ -321,18 +364,53 @@ function isOpenNow() {
 
   const now = new Date();
   const nowMin = now.getHours() * 60 + now.getMinutes();
-
   const openMin = timeToMinutes(schedule.abre);
   const closeMin = timeToMinutes(schedule.fecha);
 
-  // Caso normal (abre e fecha no mesmo dia)
-  if (closeMin >= openMin) {
-    return nowMin >= openMin && nowMin <= closeMin;
-  }
-
-  // Caso passa da meia-noite (ex: 18:00 até 02:00)
-  // aberto se agora >= abre OU agora <= fecha
+  if (closeMin >= openMin) return nowMin >= openMin && nowMin <= closeMin;
   return (nowMin >= openMin) || (nowMin <= closeMin);
+}
+
+/* =========================
+   UI: tags e botões
+   ========================= */
+function renderAvailabilityTags(open) {
+  Object.keys(ITEMS).forEach(key => {
+    const btn = document.getElementById("btn-" + key);
+    const tagDiv = document.getElementById("tag-" + key);
+    if (!btn || !tagDiv) return;
+
+    const qtd = Number(stock[key] ?? 0);
+
+    // Limpa tags
+    tagDiv.innerHTML = "";
+
+    // Regras:
+    // - Se fechado: desativa item (mesmo com estoque)
+    // - Se estoque = 0: esgotado
+    // - Se estoque <= LIMIAR_ULTIMAS: últimas unidades
+
+    if (!open) {
+      btn.disabled = true;
+      tagDiv.innerHTML = `<span class="badge closed">Fora do horário</span>`;
+      return;
+    }
+
+    if (qtd <= 0) {
+      btn.disabled = true;
+      tagDiv.innerHTML = `<span class="badge soldout">ESGOTADO</span>`;
+      return;
+    }
+
+    // Disponível
+    btn.disabled = false;
+
+    if (qtd <= LIMIAR_ULTIMAS) {
+      tagDiv.innerHTML = `<span class="badge low">Últimas unidades: ${qtd}</span>`;
+    } else {
+      tagDiv.innerHTML = `<span class="badge ok">Disponível</span>`;
+    }
+  });
 }
 
 function updateOpenStatusUI() {
@@ -341,20 +419,14 @@ function updateOpenStatusUI() {
   const hoursText = document.getElementById("hours-text");
 
   const schedule = getTodaySchedule();
-  if (schedule) {
-    hoursText.textContent = `Horário de pedidos hoje: ${schedule.abre} às ${schedule.fecha}`;
-  } else {
-    hoursText.textContent = "Horário de pedidos: indisponível";
-  }
+  hoursText.textContent = schedule
+    ? `Horário de pedidos hoje: ${schedule.abre} às ${schedule.fecha}`
+    : "Horário de pedidos: indisponível";
 
   const open = isOpenNow();
 
-  // Desabilitar botão do carrinho e finalizar se fechado
   document.getElementById("cartBtn").disabled = !open;
   document.getElementById("finalizarBtn").disabled = !open;
-
-  // Desabilitar botões "Adicionar" se fechado (e também respeitar esgotado)
-  applySoldOutAndOpenRules(open);
 
   if (open) {
     badge.className = "badge ok";
@@ -367,35 +439,18 @@ function updateOpenStatusUI() {
     notice.style.display = "block";
     notice.innerHTML = "<b>Estamos fechados no momento.</b> Fora do horário, não é possível adicionar itens nem finalizar pedidos.";
   }
+
+  renderAvailabilityTags(open);
 }
 
-function applySoldOutAndOpenRules(open) {
-  // Para cada item, se esgotado => desativa sempre
-  // se não esgotado => desativa somente quando fechado
-  Object.keys(ESGOTADO).forEach(key => {
-    const btn = document.getElementById("btn-" + key);
-    const tag = document.getElementById("soldout-" + key);
-    if (!btn || !tag) return;
-
-    if (ESGOTADO[key] === true) {
-      btn.disabled = true;
-      tag.style.display = "inline-block";
-    } else {
-      tag.style.display = "none";
-      btn.disabled = !open;
-    }
-  });
-}
+/* =========================
+   CARRINHO + PEDIDO
+   ========================= */
+let cart = [];
 
 function addItem(name, price, key) {
-  if (!isOpenNow()) {
-    alert("Estamos fora do horário de pedidos no momento.");
-    return;
-  }
-  if (key && ESGOTADO[key]) {
-    alert("Este item está esgotado.");
-    return;
-  }
+  if (!isOpenNow()) { alert("Estamos fora do horário de pedidos no momento."); return; }
+  if ((stock[key] ?? 0) <= 0) { alert("Este item está esgotado."); return; }
 
   let item = cart.find(i => i.name === name);
   if (item) item.qty++;
@@ -407,10 +462,8 @@ function addItem(name, price, key) {
 function removeItem(name) {
   let item = cart.find(i => i.name === name);
   if (!item) return;
-
   item.qty--;
   if (item.qty <= 0) cart = cart.filter(i => i.name !== name);
-
   renderCart();
 }
 
@@ -426,7 +479,7 @@ function renderCart() {
       <div class="cart-item">
         <span>${i.qty}x ${i.name}</span>
         <div class="cart-controls">
-          <button onclick="addItem('${i.name}',${i.price})">+</button>
+          <button onclick="addItem('${i.name}',${i.price}, null)">+</button>
           <button onclick="removeItem('${i.name}')">−</button>
         </div>
       </div>`;
@@ -437,16 +490,10 @@ function renderCart() {
 }
 
 function openCart() {
-  if (!isOpenNow()) {
-    alert("Estamos fora do horário de pedidos no momento.");
-    return;
-  }
+  if (!isOpenNow()) { alert("Estamos fora do horário de pedidos no momento."); return; }
   document.getElementById("cart").style.display = "block";
 }
-
-function closeCart() {
-  document.getElementById("cart").style.display = "none";
-}
+function closeCart() { document.getElementById("cart").style.display = "none"; }
 
 function toggleEntrega() {
   const tipo = document.getElementById("tipo").value;
@@ -456,15 +503,8 @@ function toggleEntrega() {
 }
 
 function sendOrder() {
-  if (!isOpenNow()) {
-    alert("Estamos fora do horário de pedidos no momento.");
-    return;
-  }
-
-  if (cart.length === 0) {
-    alert("Adicione itens ao pedido");
-    return;
-  }
+  if (!isOpenNow()) { alert("Estamos fora do horário de pedidos no momento."); return; }
+  if (cart.length === 0) { alert("Adicione itens ao pedido"); return; }
 
   const nome = document.getElementById("nome").value.trim();
   const horario = document.getElementById("horario").value;
@@ -498,10 +538,107 @@ function sendOrder() {
   window.open("https://wa.me/" + WHATSAPP_NUMERO + "?text=" + msg, "_blank");
 }
 
-// Inicializa
-updateOpenStatusUI();
+/* =========================
+   PAINEL ADMIN (escondido)
+   - abre tocando 5x no título
+   - pede senha
+   ========================= */
+let tapCount = 0;
+let tapTimer = null;
 
-// Atualiza status automaticamente a cada 30 segundos
+document.getElementById("hdr").addEventListener("click", () => {
+  tapCount++;
+  clearTimeout(tapTimer);
+  tapTimer = setTimeout(() => tapCount = 0, 1200);
+
+  if (tapCount >= 5) {
+    tapCount = 0;
+    const pass = prompt("Senha do painel:");
+    if (pass === null) return;
+    if (pass !== ADMIN_SENHA) {
+      alert("Senha incorreta.");
+      return;
+    }
+    openAdmin();
+  }
+});
+
+function openAdmin() {
+  buildAdminList();
+  document.getElementById("adminOverlay").style.display = "flex";
+}
+function closeAdmin() {
+  document.getElementById("adminOverlay").style.display = "none";
+}
+
+function buildAdminList() {
+  const el = document.getElementById("adminList");
+  el.innerHTML = "";
+
+  Object.keys(ITEMS).forEach(key => {
+    const it = ITEMS[key];
+    const qtd = Number(stock[key] ?? 0);
+
+    const row = document.createElement("div");
+    row.className = "admin-row";
+
+    row.innerHTML = `
+      <div>
+        <b>${it.nome}</b><br>
+        <small>Preço: R$ ${it.preco.toFixed(2)}</small>
+      </div>
+
+      <div>
+        <label style="font-size:12px;font-weight:bold">Estoque</label>
+        <input type="number" min="0" step="1" id="stk-${key}" value="${qtd}">
+      </div>
+
+      <div>
+        <label style="font-size:12px;font-weight:bold">Esgotado?</label>
+        <select id="sgt-${key}">
+          <option value="0"${qtd>0 ? " selected" : ""}>Não</option>
+          <option value="1"${qtd<=0 ? " selected" : ""}>Sim</option>
+        </select>
+        <div class="helper">Se “Sim”, estoque vira 0.</div>
+      </div>
+    `;
+
+    el.appendChild(row);
+  });
+}
+
+function saveAdmin() {
+  Object.keys(ITEMS).forEach(key => {
+    const stk = document.getElementById("stk-" + key);
+    const sgt = document.getElementById("sgt-" + key);
+    if (!stk || !sgt) return;
+
+    let qtd = parseInt(stk.value || "0", 10);
+    if (isNaN(qtd) || qtd < 0) qtd = 0;
+
+    if (sgt.value === "1") qtd = 0;
+    stock[key] = qtd;
+  });
+
+  saveStock(stock);
+  updateOpenStatusUI();
+  alert("Salvo! ✅");
+  closeAdmin();
+}
+
+function resetAdmin() {
+  if (!confirm("Restaurar estoque padrão?")) return;
+  stock = { ...DEFAULT_STOCK };
+  saveStock(stock);
+  updateOpenStatusUI();
+  alert("Padrão restaurado ✅");
+  closeAdmin();
+}
+
+/* =========================
+   Inicialização
+   ========================= */
+updateOpenStatusUI();
 setInterval(updateOpenStatusUI, 30000);
 </script>
 
