@@ -6,50 +6,16 @@
 <title>Pancho de Bagé</title>
 
 <style>
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
+body { margin: 0; font-family: Arial, sans-serif; background: #fff8f0; }
+header { background: #b71c1c; color: white; padding: 25px; text-align: center; }
+section { padding: 20px; max-width: 1100px; margin: auto; }
+h2 { margin-top: 30px; }
 
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #fff8f0;
-}
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 15px; }
 
-header {
-  background: #b71c1c;
-  color: white;
-  padding: 25px;
-  text-align: center;
-}
-
-section {
-  padding: 20px;
-  max-width: 1100px;
-  margin: auto;
-}
-
-h2 {
-  margin-top: 30px;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 15px;
-}
-
-.item {
-  background: white;
-  padding: 15px;
-  border-radius: 10px;
-  box-shadow: 0 3px 8px rgba(0,0,0,.1);
-}
-
-.price {
-  font-weight: bold;
-  color: #2e7d32;
-}
+.item { background: white; padding: 15px; border-radius: 10px; box-shadow: 0 3px 8px rgba(0,0,0,.1); }
+.price { font-weight: bold; color: #2e7d32; }
 
 .item button {
   margin-top: 10px;
@@ -60,6 +26,29 @@ h2 {
   border: none;
   border-radius: 6px;
   cursor: pointer;
+}
+.item button:disabled { background: #9e9e9e; cursor: not-allowed; }
+
+.badge {
+  display: inline-block;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: bold;
+  margin-top: 8px;
+}
+.badge.ok { background: #e8f5e9; color: #1b5e20; }
+.badge.closed { background: #ffebee; color: #b71c1c; }
+.badge.soldout { background: #eeeeee; color: #424242; }
+
+.notice {
+  margin: 12px auto 0;
+  max-width: 1100px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 3px 8px rgba(0,0,0,.08);
+  border-left: 6px solid #b71c1c;
 }
 
 .cart-btn {
@@ -74,37 +63,27 @@ h2 {
   cursor: pointer;
   z-index: 1000;
 }
+.cart-btn:disabled { background: #9e9e9e; cursor: not-allowed; }
 
 .cart {
   position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  bottom: 0; left: 0; right: 0;
   background: white;
   padding: 20px;
   border-radius: 20px 20px 0 0;
   box-shadow: 0 -4px 15px rgba(0,0,0,.3);
   display: none;
-  max-height: 70vh;
+  max-height: 82vh;
   overflow-y: auto;
   z-index: 1001;
 }
 
-.cart-item {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 10px;
-}
+.cart h3 { margin: 10px 0; }
 
-.cart-controls button {
-  padding: 4px 8px;
-  margin-left: 4px;
-}
+.cart-item { display: flex; justify-content: space-between; margin-bottom: 10px; gap: 10px; }
+.cart-controls button { padding: 4px 8px; margin-left: 4px; }
 
-.total {
-  font-weight: bold;
-  margin-top: 10px;
-}
+.total { font-weight: bold; margin-top: 10px; }
 
 .finalizar {
   width: 100%;
@@ -116,6 +95,25 @@ h2 {
   color: white;
   cursor: pointer;
 }
+.finalizar:disabled { background: #9e9e9e; cursor: not-allowed; }
+
+.form-grid { display: grid; grid-template-columns: 1fr; gap: 10px; margin-top: 10px; }
+.form-grid.two { grid-template-columns: 1fr; }
+label { font-size: 14px; font-weight: bold; }
+input, select, textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+}
+textarea { min-height: 90px; resize: vertical; }
+.helper { font-size: 12px; color: #555; margin-top: -6px; }
+.hidden { display: none; }
+
+@media (min-width: 700px) {
+  .form-grid.two { grid-template-columns: 1fr 1fr; }
+}
 </style>
 </head>
 
@@ -123,8 +121,12 @@ h2 {
 
 <header>
   <h1>🌭 Pancho de Bagé</h1>
-  <p> Preço, Sabor e Qualidade </p>
+  <p>Preço, sabor e qualidade</p>
+  <div id="status-badge" class="badge ok">🟢 Aberto</div>
+  <div style="font-size:12px;opacity:.9;margin-top:6px" id="hours-text"></div>
 </header>
+
+<div class="notice" id="notice" style="display:none;"></div>
 
 <section>
   <h2>Panchos</h2>
@@ -132,25 +134,29 @@ h2 {
     <div class="item">
       <h3>Pancho Tradicional</h3>
       <p class="price">R$ 18,00</p>
-      <button onclick="addItem('Pancho Tradicional',18)">Adicionar</button>
+      <div id="soldout-pancho_tradicional" class="badge soldout" style="display:none;">ESGOTADO</div>
+      <button id="btn-pancho_tradicional" onclick="addItem('Pancho Tradicional',18,'pancho_tradicional')">Adicionar</button>
     </div>
 
     <div class="item">
       <h3>Pancho Mega</h3>
       <p class="price">R$ 20,00</p>
-      <button onclick="addItem('Pancho Mega',20)">Adicionar</button>
+      <div id="soldout-pancho_mega" class="badge soldout" style="display:none;">ESGOTADO</div>
+      <button id="btn-pancho_mega" onclick="addItem('Pancho Mega',20,'pancho_mega')">Adicionar</button>
     </div>
 
     <div class="item">
       <h3>Pancho Bacon e Calabresa</h3>
       <p class="price">R$ 22,00</p>
-      <button onclick="addItem('Pancho Bacon e Calabresa',22)">Adicionar</button>
+      <div id="soldout-pancho_bacon_calabresa" class="badge soldout" style="display:none;">ESGOTADO</div>
+      <button id="btn-pancho_bacon_calabresa" onclick="addItem('Pancho Bacon e Calabresa',22,'pancho_bacon_calabresa')">Adicionar</button>
     </div>
 
     <div class="item">
       <h3>Pancho Coração</h3>
       <p class="price">R$ 24,00</p>
-      <button onclick="addItem('Pancho Coração',24)">Adicionar</button>
+      <div id="soldout-pancho_coracao" class="badge soldout" style="display:none;">ESGOTADO</div>
+      <button id="btn-pancho_coracao" onclick="addItem('Pancho Coração',24,'pancho_coracao')">Adicionar</button>
     </div>
   </div>
 
@@ -159,55 +165,252 @@ h2 {
     <div class="item">
       <h3>Coca-Cola</h3>
       <p class="price">R$ 6,00</p>
-      <button onclick="addItem('Coca-Cola',6)">Adicionar</button>
+      <div id="soldout-coca" class="badge soldout" style="display:none;">ESGOTADO</div>
+      <button id="btn-coca" onclick="addItem('Coca-Cola',6,'coca')">Adicionar</button>
     </div>
 
     <div class="item">
       <h3>Coca-Cola Zero</h3>
       <p class="price">R$ 6,00</p>
-      <button onclick="addItem('Coca-Cola Zero',6)">Adicionar</button>
+      <div id="soldout-coca_zero" class="badge soldout" style="display:none;">ESGOTADO</div>
+      <button id="btn-coca_zero" onclick="addItem('Coca-Cola Zero',6,'coca_zero')">Adicionar</button>
     </div>
 
     <div class="item">
       <h3>Fruki</h3>
       <p class="price">R$ 5,00</p>
-      <button onclick="addItem('Fruki',5)">Adicionar</button>
+      <div id="soldout-fruki" class="badge soldout" style="display:none;">ESGOTADO</div>
+      <button id="btn-fruki" onclick="addItem('Fruki',5,'fruki')">Adicionar</button>
     </div>
 
     <div class="item">
       <h3>Água Mineral</h3>
       <p class="price">R$ 4,00</p>
-      <button onclick="addItem('Água Mineral',4)">Adicionar</button>
+      <div id="soldout-agua" class="badge soldout" style="display:none;">ESGOTADO</div>
+      <button id="btn-agua" onclick="addItem('Água Mineral',4,'agua')">Adicionar</button>
     </div>
   </div>
 </section>
 
-<button class="cart-btn" onclick="openCart()">🛒 Carrinho</button>
+<button id="cartBtn" class="cart-btn" onclick="openCart()">🛒 Carrinho</button>
 
 <div class="cart" id="cart">
   <button onclick="closeCart()">❌ Fechar</button>
-  <div id="cart-items"></div>
-  <div class="total" id="total"></div>
-  <button class="finalizar" onclick="sendOrder()">Finalizar pedido pelo WhatsApp</button>
+
+  <h3>🧾 Seus itens</h3>
+  <div id="cart-items">🛒 Carrinho vazio</div>
+  <div class="total" id="total">Total: R$ 0,00</div>
+
+  <h3>📋 Dados do pedido</h3>
+
+  <div class="form-grid two">
+    <div>
+      <label for="nome">Nome do destinatário *</label>
+      <input id="nome" type="text" placeholder="Ex: João Silva">
+    </div>
+
+    <div>
+      <label for="horario">Horário do pedido *</label>
+      <select id="horario">
+        <option value="">Selecione</option>
+        <option>Agora</option>
+        <option>Daqui 15 min</option>
+        <option>Daqui 30 min</option>
+        <option>Daqui 45 min</option>
+        <option>Daqui 60 min</option>
+      </select>
+      <div class="helper">Se preferir, escolha “Agora”.</div>
+    </div>
+  </div>
+
+  <div class="form-grid two">
+    <div>
+      <label for="tipo">Entrega ou retirada *</label>
+      <select id="tipo" onchange="toggleEntrega()">
+        <option value="">Selecione</option>
+        <option value="Retirada">Retirada</option>
+        <option value="Entrega">Entrega</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="pagamento">Forma de pagamento *</label>
+      <select id="pagamento">
+        <option value="">Selecione</option>
+        <option>Pix</option>
+        <option>Dinheiro</option>
+        <option>Cartão</option>
+      </select>
+      <div class="helper">Para entrega, informe a forma de pagamento.</div>
+    </div>
+  </div>
+
+  <div id="entrega-box" class="hidden">
+    <label for="endereco">Endereço para entrega *</label>
+    <input id="endereco" type="text" placeholder="Rua, número, bairro, referência...">
+    <div class="helper">Ex: Rua X, 123, Centro. Perto do mercado Y.</div>
+  </div>
+
+  <div class="form-grid">
+    <label for="obs">Observações do lanche</label>
+    <textarea id="obs" placeholder="Ex: Prensado, sem maionese, sem ketchup, bem recheado..."></textarea>
+  </div>
+
+  <button id="finalizarBtn" class="finalizar" onclick="sendOrder()">Finalizar pedido pelo WhatsApp</button>
 </div>
 
 <script>
+/* =========================
+   CONFIGURAÇÃO (EDITE AQUI)
+   ========================= */
+
+/**
+ * Horário de funcionamento por dia da semana
+ * 0=Dom, 1=Seg, 2=Ter, 3=Qua, 4=Qui, 5=Sex, 6=Sáb
+ * Use formato 24h: "18:00"
+ */
+const HORARIOS = {
+  0: { abre: "18:00", fecha: "23:00" }, // Domingo
+  1: { abre: "18:00", fecha: "23:00" }, // Segunda
+  2: { abre: "18:00", fecha: "23:00" }, // Terça
+  3: { abre: "18:00", fecha: "23:00" }, // Quarta
+  4: { abre: "18:00", fecha: "23:00" }, // Quinta
+  5: { abre: "18:00", fecha: "23:59" }, // Sexta (exemplo)
+  6: { abre: "18:00", fecha: "23:59" }  // Sábado (exemplo)
+};
+
+/**
+ * Marcar itens como "ESGOTADO"
+ * true  = esgotado (desativa o botão e mostra etiqueta)
+ * false = disponível
+ */
+const ESGOTADO = {
+  pancho_tradicional: false,
+  pancho_mega: false,
+  pancho_bacon_calabresa: false,
+  pancho_coracao: false,
+  coca: false,
+  coca_zero: false,
+  fruki: false,
+  agua: false
+};
+
+// WhatsApp do negócio
+const WHATSAPP_NUMERO = "5553999021357";
+
+/* =========================
+   LÓGICA DO CARRINHO + PEDIDO
+   ========================= */
+
 let cart = [];
 
-function addItem(name, price) {
+function timeToMinutes(hhmm) {
+  const [h, m] = hhmm.split(":").map(Number);
+  return (h * 60) + m;
+}
+
+function getTodaySchedule() {
+  const d = new Date();
+  const dow = d.getDay(); // 0-6
+  return HORARIOS[dow] || null;
+}
+
+function isOpenNow() {
+  const schedule = getTodaySchedule();
+  if (!schedule) return false;
+
+  const now = new Date();
+  const nowMin = now.getHours() * 60 + now.getMinutes();
+
+  const openMin = timeToMinutes(schedule.abre);
+  const closeMin = timeToMinutes(schedule.fecha);
+
+  // Caso normal (abre e fecha no mesmo dia)
+  if (closeMin >= openMin) {
+    return nowMin >= openMin && nowMin <= closeMin;
+  }
+
+  // Caso passa da meia-noite (ex: 18:00 até 02:00)
+  // aberto se agora >= abre OU agora <= fecha
+  return (nowMin >= openMin) || (nowMin <= closeMin);
+}
+
+function updateOpenStatusUI() {
+  const badge = document.getElementById("status-badge");
+  const notice = document.getElementById("notice");
+  const hoursText = document.getElementById("hours-text");
+
+  const schedule = getTodaySchedule();
+  if (schedule) {
+    hoursText.textContent = `Horário de pedidos hoje: ${schedule.abre} às ${schedule.fecha}`;
+  } else {
+    hoursText.textContent = "Horário de pedidos: indisponível";
+  }
+
+  const open = isOpenNow();
+
+  // Desabilitar botão do carrinho e finalizar se fechado
+  document.getElementById("cartBtn").disabled = !open;
+  document.getElementById("finalizarBtn").disabled = !open;
+
+  // Desabilitar botões "Adicionar" se fechado (e também respeitar esgotado)
+  applySoldOutAndOpenRules(open);
+
+  if (open) {
+    badge.className = "badge ok";
+    badge.textContent = "🟢 Aberto";
+    notice.style.display = "none";
+    notice.textContent = "";
+  } else {
+    badge.className = "badge closed";
+    badge.textContent = "🔴 Fechado";
+    notice.style.display = "block";
+    notice.innerHTML = "<b>Estamos fechados no momento.</b> Fora do horário, não é possível adicionar itens nem finalizar pedidos.";
+  }
+}
+
+function applySoldOutAndOpenRules(open) {
+  // Para cada item, se esgotado => desativa sempre
+  // se não esgotado => desativa somente quando fechado
+  Object.keys(ESGOTADO).forEach(key => {
+    const btn = document.getElementById("btn-" + key);
+    const tag = document.getElementById("soldout-" + key);
+    if (!btn || !tag) return;
+
+    if (ESGOTADO[key] === true) {
+      btn.disabled = true;
+      tag.style.display = "inline-block";
+    } else {
+      tag.style.display = "none";
+      btn.disabled = !open;
+    }
+  });
+}
+
+function addItem(name, price, key) {
+  if (!isOpenNow()) {
+    alert("Estamos fora do horário de pedidos no momento.");
+    return;
+  }
+  if (key && ESGOTADO[key]) {
+    alert("Este item está esgotado.");
+    return;
+  }
+
   let item = cart.find(i => i.name === name);
   if (item) item.qty++;
-  else cart.push({name, price, qty: 1});
+  else cart.push({ name, price, qty: 1 });
+
   renderCart();
 }
 
 function removeItem(name) {
   let item = cart.find(i => i.name === name);
   if (!item) return;
+
   item.qty--;
-  if (item.qty <= 0) {
-    cart = cart.filter(i => i.name !== name);
-  }
+  if (item.qty <= 0) cart = cart.filter(i => i.name !== name);
+
   renderCart();
 }
 
@@ -229,11 +432,15 @@ function renderCart() {
       </div>`;
   });
 
-  items.innerHTML = items.innerHTML || "🛒 Carrinho vazio";
+  if (cart.length === 0) items.innerHTML = "🛒 Carrinho vazio";
   totalDiv.innerText = "Total: R$ " + total.toFixed(2);
 }
 
 function openCart() {
+  if (!isOpenNow()) {
+    alert("Estamos fora do horário de pedidos no momento.");
+    return;
+  }
   document.getElementById("cart").style.display = "block";
 }
 
@@ -241,22 +448,61 @@ function closeCart() {
   document.getElementById("cart").style.display = "none";
 }
 
+function toggleEntrega() {
+  const tipo = document.getElementById("tipo").value;
+  const box = document.getElementById("entrega-box");
+  if (tipo === "Entrega") box.classList.remove("hidden");
+  else box.classList.add("hidden");
+}
+
 function sendOrder() {
+  if (!isOpenNow()) {
+    alert("Estamos fora do horário de pedidos no momento.");
+    return;
+  }
+
   if (cart.length === 0) {
     alert("Adicione itens ao pedido");
     return;
   }
 
-  let msg = "Olá, quero fazer um pedido:%0A%0A";
+  const nome = document.getElementById("nome").value.trim();
+  const horario = document.getElementById("horario").value;
+  const tipo = document.getElementById("tipo").value;
+  const pagamento = document.getElementById("pagamento").value;
+  const endereco = document.getElementById("endereco").value.trim();
+  const obs = document.getElementById("obs").value.trim();
+
+  if (!nome) { alert("Informe o nome do destinatário."); return; }
+  if (!horario) { alert("Selecione o horário do pedido."); return; }
+  if (!tipo) { alert("Selecione entrega ou retirada."); return; }
+  if (!pagamento) { alert("Selecione a forma de pagamento."); return; }
+  if (tipo === "Entrega" && !endereco) { alert("Informe o endereço para entrega."); return; }
+
+  let msg = "Olá, quero fazer um pedido no Pancho de Bagé:%0A%0A";
+  msg += `Nome: ${encodeURIComponent(nome)}%0A`;
+  msg += `Horário: ${encodeURIComponent(horario)}%0A`;
+  msg += `Tipo: ${encodeURIComponent(tipo)}%0A`;
+  msg += `Pagamento: ${encodeURIComponent(pagamento)}%0A`;
+  if (tipo === "Entrega") msg += `Endereço: ${encodeURIComponent(endereco)}%0A`;
+  if (obs) msg += `Observações: ${encodeURIComponent(obs)}%0A`;
+
+  msg += "%0AItens:%0A";
   cart.forEach(i => {
-    msg += `${i.qty}x ${i.name} - R$ ${(i.price*i.qty).toFixed(2)}%0A`;
+    msg += `${i.qty}x ${encodeURIComponent(i.name)} - R$ ${(i.price * i.qty).toFixed(2)}%0A`;
   });
 
-  let total = cart.reduce((s,i)=>s+i.price*i.qty,0);
+  const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
   msg += `%0ATotal: R$ ${total.toFixed(2)}`;
 
-  window.open("https://wa.me/5553999021357?text=" + msg, "_blank");
+  window.open("https://wa.me/" + WHATSAPP_NUMERO + "?text=" + msg, "_blank");
 }
+
+// Inicializa
+updateOpenStatusUI();
+
+// Atualiza status automaticamente a cada 30 segundos
+setInterval(updateOpenStatusUI, 30000);
 </script>
 
 </body>
