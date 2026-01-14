@@ -1,680 +1,728 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pancho de Bagé</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pancho de Bagé</title>
+  <style>
+    :root{
+      --red:#b71c1c;
+      --green:#2e7d32;
+      --bg:#fff8f0;
+      --card:#ffffff;
+      --muted:#6b7280;
+      --shadow:0 10px 25px rgba(0,0,0,.08);
+      --radius:16px;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Arial,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:#111}
+    .top{
+      background:var(--red);
+      color:#fff;
+      padding:28px 16px 22px;
+      text-align:center;
+      position:sticky; top:0; z-index:5;
+    }
+    .brand{display:flex;gap:10px;justify-content:center;align-items:center}
+    .brand h1{margin:0;font-size:28px;line-height:1.1}
+    .subtitle{margin:8px 0 0;opacity:.92}
+    .statusRow{margin-top:14px;display:flex;flex-direction:column;gap:8px;align-items:center}
+    .pill{
+      display:inline-flex;align-items:center;gap:8px;
+      background:rgba(255,255,255,.14);
+      border:1px solid rgba(255,255,255,.25);
+      padding:8px 12px;border-radius:999px;
+      font-weight:700;
+    }
+    .dot{width:10px;height:10px;border-radius:999px;background:#ff5252}
+    .dot.on{background:#34d399}
+    .hours{font-size:13px;opacity:.95}
 
-<style>
-* { box-sizing: border-box; }
-body { margin: 0; font-family: Arial, sans-serif; background: #fff8f0; }
-header { background: #b71c1c; color: white; padding: 22px; text-align: center; }
-section { padding: 20px; max-width: 1100px; margin: auto; }
-h2 { margin-top: 30px; }
+    .notice{
+      margin:14px auto 0;
+      max-width:1100px;
+      background:#fff;
+      border-left:6px solid var(--red);
+      border-radius:12px;
+      padding:12px 14px;
+      box-shadow:0 6px 18px rgba(0,0,0,.05);
+      width:calc(100% - 24px);
+    }
+    .notice strong{color:#111}
+    .wrap{max-width:1100px;margin:18px auto 90px;padding:0 12px}
 
-.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 15px; }
-.item { background: white; padding: 15px; border-radius: 10px; box-shadow: 0 3px 8px rgba(0,0,0,.1); }
-.price { font-weight: bold; color: #2e7d32; }
+    h2{margin:26px 6px 12px;font-size:22px}
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+      gap:14px;
+    }
+    .card{
+      background:var(--card);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:14px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      min-height:150px;
+    }
+    .card h3{margin:0;font-size:18px}
+    .desc{margin:0;color:var(--muted);font-size:13px;line-height:1.3}
+    .price{font-weight:800;color:var(--green)}
+    .badges{display:flex;gap:8px;flex-wrap:wrap}
+    .badge{
+      font-size:12px;
+      padding:4px 10px;
+      border-radius:999px;
+      background:#f3f4f6;
+      color:#111;
+      border:1px solid #e5e7eb;
+    }
+    .badge.warn{background:#fff7ed;border-color:#fed7aa;color:#9a3412}
+    .badge.out{background:#fee2e2;border-color:#fecaca;color:#991b1b}
+    .btn{
+      border:0;
+      border-radius:12px;
+      padding:12px 12px;
+      font-weight:800;
+      cursor:pointer;
+      background:var(--red);
+      color:#fff;
+      transition:transform .04s ease,opacity .2s ease;
+      margin-top:auto;
+    }
+    .btn:active{transform:scale(.99)}
+    .btn[disabled]{opacity:.45;cursor:not-allowed}
 
-.item button {
-  margin-top: 10px; width: 100%; padding: 10px;
-  background: #b71c1c; color: white; border: none; border-radius: 6px; cursor: pointer;
-}
-.item button:disabled { background: #9e9e9e; cursor: not-allowed; }
+    .map{
+      margin-top:20px;
+      background:#fff;
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+    .mapHead{padding:14px 14px 8px}
+    iframe{width:100%;height:260px;border:0}
 
-.badge {
-  display: inline-block; padding: 6px 10px; border-radius: 999px;
-  font-size: 12px; font-weight: bold; margin-top: 8px;
-}
-.badge.ok { background: #e8f5e9; color: #1b5e20; }
-.badge.closed { background: #ffebee; color: #b71c1c; }
-.badge.soldout { background: #eeeeee; color: #424242; }
-.badge.low { background: #fff3e0; color: #e65100; }
+    /* Floating Cart Button */
+    .cartFab{
+      position:fixed;right:14px;bottom:14px;z-index:10;
+      border:0;border-radius:999px;
+      padding:12px 16px;
+      background:var(--green);color:#fff;
+      font-weight:900;
+      box-shadow:0 14px 28px rgba(0,0,0,.18);
+      cursor:pointer;
+      display:flex;gap:10px;align-items:center;
+    }
+    .cartCount{
+      background:rgba(255,255,255,.2);
+      padding:2px 9px;border-radius:999px;
+      font-weight:900;
+    }
+    .cartFab[disabled]{opacity:.55;cursor:not-allowed}
 
-.notice {
-  margin: 12px auto 0; max-width: 1100px;
-  padding: 12px 14px; border-radius: 10px; background: #fff;
-  box-shadow: 0 3px 8px rgba(0,0,0,.08);
-  border-left: 6px solid #b71c1c;
-}
+    /* Drawer */
+    .overlay{
+      position:fixed;inset:0;background:rgba(0,0,0,.42);
+      display:none;z-index:20;
+    }
+    .drawer{
+      position:fixed;right:0;top:0;height:100%;width:min(420px,100%);
+      background:#fff;z-index:21;
+      transform:translateX(100%);
+      transition:transform .2s ease;
+      display:flex;flex-direction:column;
+    }
+    .drawer.open{transform:translateX(0)}
+    .overlay.show{display:block}
+    .drawerHead{
+      padding:14px 14px 10px;
+      border-bottom:1px solid #eee;
+      display:flex;align-items:center;justify-content:space-between;
+      gap:10px;
+    }
+    .drawerHead h3{margin:0}
+    .xbtn{
+      border:0;background:#f3f4f6;border-radius:12px;
+      padding:10px 12px;font-weight:900;cursor:pointer;
+    }
+    .drawerBody{padding:12px 14px;overflow:auto;flex:1}
+    .row{
+      display:flex;align-items:center;justify-content:space-between;
+      gap:10px;padding:10px 0;border-bottom:1px dashed #eee;
+    }
+    .row:last-child{border-bottom:0}
+    .rowTitle{font-weight:800}
+    .rowSub{font-size:12px;color:var(--muted)}
+    .qty{
+      display:flex;align-items:center;gap:8px;
+    }
+    .qbtn{
+      width:34px;height:34px;border-radius:10px;border:1px solid #e5e7eb;
+      background:#fff;font-weight:900;cursor:pointer;
+    }
+    .qnum{min-width:22px;text-align:center;font-weight:900}
+    .sumLine{display:flex;justify-content:space-between;margin-top:12px;font-weight:900}
+    .small{font-size:12px;color:var(--muted);margin:6px 0 0}
 
-.cart-btn {
-  position: fixed; bottom: 20px; right: 20px;
-  background: #2e7d32; color: white;
-  padding: 15px 18px; border-radius: 50px; border: none;
-  cursor: pointer; z-index: 1000;
-}
-.cart-btn:disabled { background: #9e9e9e; cursor: not-allowed; }
+    .form{
+      margin-top:14px;
+      display:grid;
+      grid-template-columns:1fr;
+      gap:10px;
+    }
+    .field label{display:block;font-size:12px;color:var(--muted);margin-bottom:6px;font-weight:800}
+    .field input,.field select,.field textarea{
+      width:100%;
+      padding:12px 12px;
+      border-radius:12px;
+      border:1px solid #e5e7eb;
+      outline:none;
+      font-size:14px;
+    }
+    textarea{min-height:80px;resize:vertical}
+    .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    @media (max-width:520px){ .two{grid-template-columns:1fr} }
 
-.cart {
-  position: fixed; bottom: 0; left: 0; right: 0;
-  background: white; padding: 20px;
-  border-radius: 20px 20px 0 0;
-  box-shadow: 0 -4px 15px rgba(0,0,0,.3);
-  display: none; max-height: 82vh; overflow-y: auto; z-index: 1001;
-}
-.cart h3 { margin: 10px 0; }
-.cart-item { display: flex; justify-content: space-between; margin-bottom: 10px; gap: 10px; }
-.cart-controls button { padding: 4px 8px; margin-left: 4px; }
-.total { font-weight: bold; margin-top: 10px; }
-
-.finalizar {
-  width: 100%; background: #2e7d32; padding: 14px; border: none;
-  border-radius: 8px; margin-top: 10px; color: white; cursor: pointer;
-}
-.finalizar:disabled { background: #9e9e9e; cursor: not-allowed; }
-
-.form-grid { display: grid; grid-template-columns: 1fr; gap: 10px; margin-top: 10px; }
-.form-grid.two { grid-template-columns: 1fr; }
-label { font-size: 14px; font-weight: bold; }
-input, select, textarea {
-  width: 100%; padding: 10px; border: 1px solid #ddd;
-  border-radius: 8px; font-size: 14px;
-}
-textarea { min-height: 90px; resize: vertical; }
-.helper { font-size: 12px; color: #555; margin-top: -6px; }
-.hidden { display: none; }
-
-@media (min-width: 700px) { .form-grid.two { grid-template-columns: 1fr 1fr; } }
-
-/* ===== Painel Admin ===== */
-.admin-overlay{
-  position: fixed; inset: 0; background: rgba(0,0,0,.45);
-  display:none; align-items: flex-end; justify-content: center; z-index: 2000;
-}
-.admin-panel{
-  width: min(900px, 100%);
-  background: #fff; border-radius: 18px 18px 0 0;
-  padding: 16px; max-height: 85vh; overflow: auto;
-}
-.admin-top{
-  display:flex; justify-content: space-between; align-items:center; gap:10px;
-}
-.admin-top h3{ margin: 8px 0; }
-.admin-row{
-  display:grid; grid-template-columns: 1.2fr .7fr .7fr; gap:10px;
-  padding: 10px 0; border-bottom: 1px solid #eee; align-items:center;
-}
-.admin-row small{ color:#666; }
-.admin-actions{ display:flex; gap:10px; }
-.admin-actions button{
-  border:none; border-radius:10px; padding:10px 12px; cursor:pointer;
-}
-.btn-save{ background:#2e7d32; color:#fff; }
-.btn-close{ background:#b71c1c; color:#fff; }
-.btn-reset{ background:#9e9e9e; color:#fff; }
-</style>
+    .drawerFoot{
+      padding:12px 14px;
+      border-top:1px solid #eee;
+      background:#fff;
+    }
+    .cta{
+      width:100%;
+      border:0;border-radius:14px;
+      padding:14px 14px;
+      font-weight:900;
+      background:var(--green);
+      color:#fff;
+      cursor:pointer;
+    }
+    .cta[disabled]{opacity:.55;cursor:not-allowed}
+  </style>
 </head>
-
 <body>
 
-<header id="hdr">
-  <h1>🌭 Pancho de Bagé</h1>
-  <p>Preço, sabor e qualidade</p>
-  <div id="status-badge" class="badge ok">🟢 Aberto</div>
-  <div style="font-size:12px;opacity:.9;margin-top:6px" id="hours-text"></div>
-  <div style="font-size:11px;opacity:.75;margin-top:6px">
-  </div>
-</header>
-
-<div class="notice" id="notice" style="display:none;"></div>
-
-<section>
-  <h2>Panchos</h2>
-  <div class="grid">
-    <div class="item">
-      <h3>Pancho Tradicional</h3>
-      <p class="price">R$ 18,00</p>
-      <div id="tag-pancho_tradicional"></div>
-      <button id="btn-pancho_tradicional" onclick="addItem('Pancho Tradicional',18,'pancho_tradicional')">Adicionar</button>
+  <header class="top" id="top">
+    <div class="brand">
+      <div style="font-size:26px">🌭</div>
+      <h1>Pancho de Bagé</h1>
     </div>
+    <p class="subtitle">Preço, sabor e qualidade</p>
 
-    <div class="item">
-      <h3>Pancho Mega</h3>
-      <p class="price">R$ 20,00</p>
-      <div id="tag-pancho_mega"></div>
-      <button id="btn-pancho_mega" onclick="addItem('Pancho Mega',20,'pancho_mega')">Adicionar</button>
-    </div>
-
-    <div class="item">
-      <h3>Pancho Bacon e Calabresa</h3>
-      <p class="price">R$ 22,00</p>
-      <div id="tag-pancho_bacon_calabresa"></div>
-      <button id="btn-pancho_bacon_calabresa" onclick="addItem('Pancho Bacon e Calabresa',22,'pancho_bacon_calabresa')">Adicionar</button>
-    </div>
-
-    <div class="item">
-      <h3>Pancho Coração</h3>
-      <p class="price">R$ 24,00</p>
-      <div id="tag-pancho_coracao"></div>
-      <button id="btn-pancho_coracao" onclick="addItem('Pancho Coração',24,'pancho_coracao')">Adicionar</button>
-    </div>
-  </div>
-
-  <h2>Bebidas</h2>
-  <div class="grid">
-    <div class="item">
-      <h3>Coca-Cola</h3>
-      <p class="price">R$ 6,00</p>
-      <div id="tag-coca"></div>
-      <button id="btn-coca" onclick="addItem('Coca-Cola',6,'coca')">Adicionar</button>
-    </div>
-
-    <div class="item">
-      <h3>Coca-Cola Zero</h3>
-      <p class="price">R$ 6,00</p>
-      <div id="tag-coca_zero"></div>
-      <button id="btn-coca_zero" onclick="addItem('Coca-Cola Zero',6,'coca_zero')">Adicionar</button>
-    </div>
-
-    <div class="item">
-      <h3>Fruki</h3>
-      <p class="price">R$ 6,00</p>
-      <div id="tag-fruki"></div>
-      <button id="btn-fruki" onclick="addItem('Fruki',5,'fruki')">Adicionar</button>
-    </div>
-
-    <div class="item">
-      <h3>Água Mineral</h3>
-      <p class="price">R$ 4,00</p>
-      <div id="tag-agua"></div>
-      <button id="btn-agua" onclick="addItem('Água Mineral',4,'agua')">Adicionar</button>
-    </div>
-  </div>
-</section>
-
-<button id="cartBtn" class="cart-btn" onclick="openCart()">🛒 Carrinho</button>
-
-<div class="cart" id="cart">
-  <button onclick="closeCart()">❌ Fechar</button>
-
-  <h3>🧾 Seus itens</h3>
-  <div id="cart-items">🛒 Carrinho vazio</div>
-  <div class="total" id="total">Total: R$ 0,00</div>
-
-  <h3>📋 Dados do pedido</h3>
-
-  <div class="form-grid two">
-    <div>
-      <label for="nome">Nome do destinatário *</label>
-      <input id="nome" type="text" placeholder="Ex: João Silva">
-    </div>
-
-    <div>
-      <label for="horario">Horário do pedido *</label>
-      <select id="horario">
-        <option value="">Selecione</option>
-        <option>Agora</option>
-        <option>Daqui 15 min</option>
-        <option>Daqui 30 min</option>
-        <option>Daqui 45 min</option>
-        <option>Daqui 60 min</option>
-      </select>
-      <div class="helper">Se preferir, escolha “Agora”.</div>
-    </div>
-  </div>
-
-  <div class="form-grid two">
-    <div>
-      <label for="tipo">Entrega ou retirada *</label>
-      <select id="tipo" onchange="toggleEntrega()">
-        <option value="">Selecione</option>
-        <option value="Retirada">Retirada</option>
-        <option value="Entrega">Entrega</option>
-      </select>
-    </div>
-
-    <div>
-      <label for="pagamento">Forma de pagamento *</label>
-      <select id="pagamento">
-        <option value="">Selecione</option>
-        <option>Pix</option>
-        <option>Dinheiro</option>
-        <option>Cartão</option>
-      </select>
-      <div class="helper">Para entrega, informe a forma de pagamento.</div>
-    </div>
-  </div>
-
-  <div id="entrega-box" class="hidden">
-    <label for="endereco">Endereço para entrega *</label>
-    <input id="endereco" type="text" placeholder="Rua, número, bairro, referência...">
-    <div class="helper">Ex: Rua X, 123, Centro. Perto do mercado Y.</div>
-  </div>
-
-  <div class="form-grid">
-    <label for="obs">Observações do lanche</label>
-    <textarea id="obs" placeholder="Ex: Prensado, sem maionese, sem ketchup, bem recheado..."></textarea>
-  </div>
-
-  <button id="finalizarBtn" class="finalizar" onclick="sendOrder()">Finalizar pedido pelo WhatsApp</button>
-</div>
-
-<!-- ====== Painel Admin escondido ====== -->
-<div class="admin-overlay" id="adminOverlay">
-  <div class="admin-panel">
-    <div class="admin-top">
-      <h3>🔒 Painel do dono (Estoque / Esgotado)</h3>
-      <div class="admin-actions">
-        <button class="btn-reset" onclick="resetAdmin()">Restaurar padrão</button>
-        <button class="btn-close" onclick="closeAdmin()">Fechar</button>
+    <div class="statusRow">
+      <div class="pill">
+        <span class="dot" id="dot"></span>
+        <span id="statusText">Carregando...</span>
       </div>
+      <div class="hours" id="hoursText">Horário de pedidos: carregando...</div>
     </div>
-    <p style="margin-top:0;color:#555;font-size:13px">
-      Dica: coloque <b>estoque = 0</b> para esgotar. Se estoque ≤ <b>2</b>, aparece “Últimas unidades”.
-    </p>
+  </header>
 
-    <div id="adminList"></div>
-
-    <button class="btn-save" style="width:100%;margin-top:12px" onclick="saveAdmin()">Salvar alterações</button>
-    <p style="color:#777;font-size:12px;margin-bottom:0">
-      Observação: as alterações ficam salvas neste aparelho/navegador.
-    </p>
+  <div class="notice" id="notice" style="display:none;">
+    <strong id="noticeTitle">Aviso</strong>
+    <span id="noticeMsg"></span>
   </div>
-</div>
 
-<script>
-/* =========================
-   CONFIGURAÇÃO
-   ========================= */
+  <main class="wrap">
+    <h2>Panchos</h2>
+    <div class="grid" id="gridPanchos"></div>
 
-// Horário de funcionamento por dia da semana (0=Dom ... 6=Sáb)
-const HORARIOS = {
-  0: { abre: "19:00", fecha: "00:00" },
-  1: { abre: "19:00", fecha: "00:00" },
-  2: { abre: "19:00", fecha: "00:00" },
-  3: { abre: "14:00" },
-  4: { abre: "19:00", fecha: "00:00" },
-  5: { abre: "19:00", fecha: "00:30" },
-  6: { abre: "19:00", fecha: "01:00" }
-};
+    <h2>Bebidas</h2>
+    <div class="grid" id="gridBebidas"></div>
 
-const WHATSAPP_NUMERO = "5553999021357";
+    <section class="map">
+      <div class="mapHead">
+        <h2 style="margin:0 0 6px">📍 Nossa localização</h2>
+        <div class="small">Retirada e entrega</div>
+      </div>
+      <!-- Seu iframe do Google Maps (o mesmo que você mandou) -->
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d211.0479914127845!2d-52.15849772790478!3d-32.183534001143!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-BR!2sbr!4v1768363410929!5m2!1spt-BR!2sbr"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+    </section>
+  </main>
 
-// Itens do cardápio (chave -> nome/valor)
-const ITEMS = {
-  pancho_tradicional: { nome: "Pancho Tradicional", preco: 18 },
-  pancho_mega: { nome: "Pancho Mega", preco: 20 },
-  pancho_bacon_calabresa: { nome: "Pancho Bacon e Calabresa", preco: 22 },
-  pancho_coracao: { nome: "Pancho Coração", preco: 24 },
-  coca: { nome: "Coca-Cola", preco: 6 },
-  coca_zero: { nome: "Coca-Cola Zero", preco: 6 },
-  fruki: { nome: "Fruki", preco: 5 },
-  agua: { nome: "Água Mineral", preco: 4 }
-};
+  <button class="cartFab" id="cartFab">
+    🛒 Carrinho <span class="cartCount" id="cartCount">0</span>
+  </button>
 
-// Padrão de estoque (você pode mudar aqui também)
-const DEFAULT_STOCK = {
-  pancho_tradicional: 50,
-  pancho_mega: 50,
-  pancho_bacon_calabresa: 50,
-  pancho_coracao: 50,
-  coca: 50,
-  coca_zero: 50,
-  fruki: 50,
-  agua: 50
-};
+  <div class="overlay" id="overlay"></div>
+  <aside class="drawer" id="drawer" aria-hidden="true">
+    <div class="drawerHead">
+      <h3>Seu carrinho</h3>
+      <button class="xbtn" id="closeDrawer">Fechar ✕</button>
+    </div>
 
-// Quando mostrar “Últimas unidades”
-const LIMIAR_ULTIMAS = 2;
+    <div class="drawerBody">
+      <div id="cartList"></div>
 
-// Senha do painel (mude para a sua)
-const ADMIN_SENHA = "1234";
+      <div class="sumLine">
+        <div>Total</div>
+        <div id="totalText">R$ 0,00</div>
+      </div>
+      <div class="small">Pagamento e endereço serão informados no WhatsApp.</div>
 
-/* =========================
-   ESTOQUE: localStorage
-   ========================= */
-const STOCK_KEY = "pancho_stock_v1";
-
-function loadStock() {
-  try {
-    const saved = localStorage.getItem(STOCK_KEY);
-    if (!saved) return { ...DEFAULT_STOCK };
-    const obj = JSON.parse(saved);
-    return { ...DEFAULT_STOCK, ...obj };
-  } catch {
-    return { ...DEFAULT_STOCK };
-  }
-}
-
-function saveStock(obj) {
-  localStorage.setItem(STOCK_KEY, JSON.stringify(obj));
-}
-
-let stock = loadStock();
-
-/* =========================
-   HORÁRIO (aberto/fechado)
-   ========================= */
-function timeToMinutes(hhmm) {
-  const [h, m] = hhmm.split(":").map(Number);
-  return (h * 60) + m;
-}
-
-function getTodaySchedule() {
-  const d = new Date();
-  const dow = d.getDay();
-  return HORARIOS[dow] || null;
-}
-
-function isOpenNow() {
-  const schedule = getTodaySchedule();
-  if (!schedule) return false;
-
-  const now = new Date();
-  const nowMin = now.getHours() * 60 + now.getMinutes();
-  const openMin = timeToMinutes(schedule.abre);
-  const closeMin = timeToMinutes(schedule.fecha);
-
-  if (closeMin >= openMin) return nowMin >= openMin && nowMin <= closeMin;
-  return (nowMin >= openMin) || (nowMin <= closeMin);
-}
-
-/* =========================
-   UI: tags e botões
-   ========================= */
-function renderAvailabilityTags(open) {
-  Object.keys(ITEMS).forEach(key => {
-    const btn = document.getElementById("btn-" + key);
-    const tagDiv = document.getElementById("tag-" + key);
-    if (!btn || !tagDiv) return;
-
-    const qtd = Number(stock[key] ?? 0);
-
-    // Limpa tags
-    tagDiv.innerHTML = "";
-
-    // Regras:
-    // - Se fechado: desativa item (mesmo com estoque)
-    // - Se estoque = 0: esgotado
-    // - Se estoque <= LIMIAR_ULTIMAS: últimas unidades
-
-    if (!open) {
-      btn.disabled = true;
-      tagDiv.innerHTML = `<span class="badge closed">Fora do horário</span>`;
-      return;
-    }
-
-    if (qtd <= 0) {
-      btn.disabled = true;
-      tagDiv.innerHTML = `<span class="badge soldout">ESGOTADO</span>`;
-      return;
-    }
-
-    // Disponível
-    btn.disabled = false;
-
-    if (qtd <= LIMIAR_ULTIMAS) {
-      tagDiv.innerHTML = `<span class="badge low">Últimas unidades: ${qtd}</span>`;
-    } else {
-      tagDiv.innerHTML = `<span class="badge ok">Disponível</span>`;
-    }
-  });
-}
-
-function updateOpenStatusUI() {
-  const badge = document.getElementById("status-badge");
-  const notice = document.getElementById("notice");
-  const hoursText = document.getElementById("hours-text");
-
-  const schedule = getTodaySchedule();
-  hoursText.textContent = schedule
-    ? `Horário de pedidos hoje: ${schedule.abre} às ${schedule.fecha}`
-    : "Horário de pedidos: indisponível";
-
-  const open = isOpenNow();
-
-  document.getElementById("cartBtn").disabled = !open;
-  document.getElementById("finalizarBtn").disabled = !open;
-
-  if (open) {
-    badge.className = "badge ok";
-    badge.textContent = "🟢 Aberto";
-    notice.style.display = "none";
-    notice.textContent = "";
-  } else {
-    badge.className = "badge closed";
-    badge.textContent = "🔴 Fechado";
-    notice.style.display = "block";
-    notice.innerHTML = "<b>Estamos fechados no momento.</b> Fora do horário, não é possível adicionar itens nem finalizar pedidos.";
-  }
-
-  renderAvailabilityTags(open);
-}
-
-/* =========================
-   CARRINHO + PEDIDO
-   ========================= */
-let cart = [];
-
-function addItem(name, price, key) {
-  if (!isOpenNow()) { alert("Estamos fora do horário de pedidos no momento."); return; }
-  if ((stock[key] ?? 0) <= 0) { alert("Este item está esgotado."); return; }
-
-  let item = cart.find(i => i.name === name);
-  if (item) item.qty++;
-  else cart.push({ name, price, qty: 1 });
-
-  renderCart();
-}
-
-function removeItem(name) {
-  let item = cart.find(i => i.name === name);
-  if (!item) return;
-  item.qty--;
-  if (item.qty <= 0) cart = cart.filter(i => i.name !== name);
-  renderCart();
-}
-
-function renderCart() {
-  let items = document.getElementById("cart-items");
-  let totalDiv = document.getElementById("total");
-  items.innerHTML = "";
-  let total = 0;
-
-  cart.forEach(i => {
-    total += i.price * i.qty;
-    items.innerHTML += `
-      <div class="cart-item">
-        <span>${i.qty}x ${i.name}</span>
-        <div class="cart-controls">
-          <button onclick="addItem('${i.name}',${i.price}, null)">+</button>
-          <button onclick="removeItem('${i.name}')">−</button>
+      <div class="form">
+        <div class="field">
+          <label>Nome do destinatário</label>
+          <input id="fNome" placeholder="Ex: João" />
         </div>
-      </div>`;
-  });
 
-  if (cart.length === 0) items.innerHTML = "🛒 Carrinho vazio";
-  totalDiv.innerText = "Total: R$ " + total.toFixed(2);
-}
+        <div class="two">
+          <div class="field">
+            <label>Entrega ou retirada?</label>
+            <select id="fTipo">
+              <option value="retirada">Retirada</option>
+              <option value="entrega">Entrega</option>
+            </select>
+          </div>
 
-function openCart() {
-  if (!isOpenNow()) { alert("Estamos fora do horário de pedidos no momento."); return; }
-  document.getElementById("cart").style.display = "block";
-}
-function closeCart() { document.getElementById("cart").style.display = "none"; }
+          <div class="field">
+            <label>Forma de pagamento</label>
+            <select id="fPagto">
+              <option value="dinheiro">Dinheiro</option>
+              <option value="pix">PIX</option>
+              <option value="cartao">Cartão</option>
+            </select>
+          </div>
+        </div>
 
-function toggleEntrega() {
-  const tipo = document.getElementById("tipo").value;
-  const box = document.getElementById("entrega-box");
-  if (tipo === "Entrega") box.classList.remove("hidden");
-  else box.classList.add("hidden");
-}
+        <div class="field" id="boxEndereco" style="display:none;">
+          <label>Endereço (somente para entrega)</label>
+          <input id="fEndereco" placeholder="Rua, número, bairro, complemento" />
+        </div>
 
-function sendOrder() {
-  if (!isOpenNow()) { alert("Estamos fora do horário de pedidos no momento."); return; }
-  if (cart.length === 0) { alert("Adicione itens ao pedido"); return; }
+        <div class="two">
+          <div class="field">
+            <label>Horário do pedido (opcional)</label>
+            <input id="fHorario" placeholder="Ex: 20:15" />
+          </div>
+          <div class="field">
+            <label>Telefone do cliente (opcional)</label>
+            <input id="fTel" placeholder="Ex: (53) 99999-9999" />
+          </div>
+        </div>
 
-  const nome = document.getElementById("nome").value.trim();
-  const horario = document.getElementById("horario").value;
-  const tipo = document.getElementById("tipo").value;
-  const pagamento = document.getElementById("pagamento").value;
-  const endereco = document.getElementById("endereco").value.trim();
-  const obs = document.getElementById("obs").value.trim();
+        <div class="field">
+          <label>Observações do lanche</label>
+          <textarea id="fObs" placeholder="Ex: prensado, sem maionese, sem cebola..."></textarea>
+        </div>
+      </div>
+    </div>
 
-  if (!nome) { alert("Informe o nome do destinatário."); return; }
-  if (!horario) { alert("Selecione o horário do pedido."); return; }
-  if (!tipo) { alert("Selecione entrega ou retirada."); return; }
-  if (!pagamento) { alert("Selecione a forma de pagamento."); return; }
-  if (tipo === "Entrega" && !endereco) { alert("Informe o endereço para entrega."); return; }
+    <div class="drawerFoot">
+      <button class="cta" id="btnWhats">Finalizar pedido no WhatsApp</button>
+      <div class="small" id="blockMsg" style="margin-top:8px;display:none;"></div>
+    </div>
+  </aside>
 
-  let msg = "Olá, quero fazer um pedido no Pancho de Bagé:%0A%0A";
-  msg += `Nome: ${encodeURIComponent(nome)}%0A`;
-  msg += `Horário: ${encodeURIComponent(horario)}%0A`;
-  msg += `Tipo: ${encodeURIComponent(tipo)}%0A`;
-  msg += `Pagamento: ${encodeURIComponent(pagamento)}%0A`;
-  if (tipo === "Entrega") msg += `Endereço: ${encodeURIComponent(endereco)}%0A`;
-  if (obs) msg += `Observações: ${encodeURIComponent(obs)}%0A`;
+  <!-- Firebase (Compat - funciona no GitHub Pages) -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore-compat.js"></script>
 
-  msg += "%0AItens:%0A";
-  cart.forEach(i => {
-    msg += `${i.qty}x ${encodeURIComponent(i.name)} - R$ ${(i.price * i.qty).toFixed(2)}%0A`;
-  });
+  <script>
+    // ========= CONFIG FIREBASE (SEU PROJETO) =========
+    const firebaseConfig = {
+      apiKey: "AIzaSyBYU_46dL6JAx2ijfmRntDh9mFlqSbsvD4",
+      authDomain: "panchodebage.firebaseapp.com",
+      projectId: "panchodebage",
+      storageBucket: "panchodebage.firebasestorage.app",
+      messagingSenderId: "555443410907",
+      appId: "1:555443410907:web:76754b4bae7934cd58f9fe"
+    };
 
-  const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
-  msg += `%0ATotal: R$ ${total.toFixed(2)}`;
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
 
-  window.open("https://wa.me/" + WHATSAPP_NUMERO + "?text=" + msg, "_blank");
-}
+    // ========= DADOS DO SEU NEGÓCIO =========
+    const WHATSAPP_NUMBER = "5553999021357"; // seu número
+    const DOC_PATH = db.collection("public").doc("menu");
 
-/* =========================
-   PAINEL ADMIN (escondido)
-   - abre tocando 5x no título
-   - pede senha
-   ========================= */
-let tapCount = 0;
-let tapTimer = null;
+    // Produtos (IDs batem com o stock do Firestore)
+    const PRODUCTS = [
+      { id:"pancho_tradicional", nome:"Pancho Tradicional", preco:18.00, categoria:"panchos",
+        desc:"Pão, condimentos, salsicha defumada e queijo mussarela" },
+      { id:"pancho_mega", nome:"Pancho Mega", preco:20.00, categoria:"panchos",
+        desc:"Pão, condimentos, salsicha (extra) e queijo (extra)" },
+      { id:"pancho_bacon_calabresa", nome:"Pancho Bacon e Calabresa", preco:22.00, categoria:"panchos",
+        desc:"Pão, condimentos, bacon/calabresa e queijo mussarela" },
+      { id:"pancho_coracao", nome:"Pancho Coração", preco:24.00, categoria:"panchos",
+        desc:"Pão, condimentos, coração e queijo mussarela" },
 
-document.getElementById("hdr").addEventListener("click", () => {
-  tapCount++;
-  clearTimeout(tapTimer);
-  tapTimer = setTimeout(() => tapCount = 0, 1200);
+      { id:"coca", nome:"Coca-Cola", preco:6.00, categoria:"bebidas", desc:"Lata/Unidade" },
+      { id:"coca_zero", nome:"Coca-Cola Zero", preco:6.00, categoria:"bebidas", desc:"Lata/Unidade" },
+      { id:"fruki", nome:"Fruki", preco:6.00, categoria:"bebidas", desc:"Lata/Unidade" },
+      { id:"agua", nome:"Água Mineral", preco:4.00, categoria:"bebidas", desc:"Unidade" },
+    ];
 
-  if (tapCount >= 5) {
-    tapCount = 0;
-    const pass = prompt("Senha do painel:");
-    if (pass === null) return;
-    if (pass !== ADMIN_SENHA) {
-      alert("Senha incorreta.");
-      return;
+    // ========= ESTADO =========
+    const state = {
+      stock: {},         // vem do Firestore
+      schedule: {},      // vem do Firestore
+      openOverride: false,
+      isOpen: false,
+      cart: {}           // { id: qty }
+    };
+
+    // ========= UTIL =========
+    const money = (v) => v.toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
+
+    function dayIndexLocal(){
+      return new Date().getDay(); // 0=domingo
     }
-    openAdmin();
-  }
-});
 
-function openAdmin() {
-  buildAdminList();
-  document.getElementById("adminOverlay").style.display = "flex";
-}
-function closeAdmin() {
-  document.getElementById("adminOverlay").style.display = "none";
-}
+    function parseHHMM(s){
+      if(!s || typeof s !== "string") return null;
+      const m = s.trim().match(/^(\d{1,2}):(\d{2})$/);
+      if(!m) return null;
+      const hh = Math.min(23, Math.max(0, parseInt(m[1],10)));
+      const mm = Math.min(59, Math.max(0, parseInt(m[2],10)));
+      return hh*60 + mm;
+    }
 
-function buildAdminList() {
-  const el = document.getElementById("adminList");
-  el.innerHTML = "";
+    function computeIsOpen(){
+      if(state.openOverride === true) return true;
 
-  Object.keys(ITEMS).forEach(key => {
-    const it = ITEMS[key];
-    const qtd = Number(stock[key] ?? 0);
+      const idx = dayIndexLocal();
+      const today = state.schedule?.[String(idx)] || state.schedule?.[idx] || null;
+      const abre = parseHHMM(today?.abre);
+      const fecha = parseHHMM(today?.fecha);
 
-    const row = document.createElement("div");
-    row.className = "admin-row";
+      // Se não tem horário ou é 00:00-00:00 => fechado
+      if(abre === null || fecha === null) return false;
+      if(abre === 0 && fecha === 0) return false;
 
-    row.innerHTML = `
-      <div>
-        <b>${it.nome}</b><br>
-        <small>Preço: R$ ${it.preco.toFixed(2)}</small>
-      </div>
+      const now = new Date();
+      const nowMin = now.getHours()*60 + now.getMinutes();
 
-      <div>
-        <label style="font-size:12px;font-weight:bold">Estoque</label>
-        <input type="number" min="0" step="1" id="stk-${key}" value="${qtd}">
-      </div>
+      // Se fecha <= abre, considera que fecha no dia seguinte (ex: 19:00 -> 00:00)
+      if(fecha <= abre){
+        return (nowMin >= abre) || (nowMin < fecha);
+      }
+      return (nowMin >= abre) && (nowMin < fecha);
+    }
 
-      <div>
-        <label style="font-size:12px;font-weight:bold">Esgotado?</label>
-        <select id="sgt-${key}">
-          <option value="0"${qtd>0 ? " selected" : ""}>Não</option>
-          <option value="1"${qtd<=0 ? " selected" : ""}>Sim</option>
-        </select>
-        <div class="helper">Se “Sim”, estoque vira 0.</div>
-      </div>
-    `;
+    function todayHoursLabel(){
+      const idx = dayIndexLocal();
+      const today = state.schedule?.[String(idx)] || state.schedule?.[idx] || null;
+      const a = today?.abre || "--:--";
+      const f = today?.fecha || "--:--";
+      return `Horário de pedidos hoje: ${a} às ${f}`;
+    }
 
-    el.appendChild(row);
-  });
-}
+    // ========= UI refs =========
+    const gridPanchos = document.getElementById("gridPanchos");
+    const gridBebidas = document.getElementById("gridBebidas");
+    const cartFab = document.getElementById("cartFab");
+    const cartCount = document.getElementById("cartCount");
+    const overlay = document.getElementById("overlay");
+    const drawer = document.getElementById("drawer");
+    const closeDrawerBtn = document.getElementById("closeDrawer");
+    const cartList = document.getElementById("cartList");
+    const totalText = document.getElementById("totalText");
+    const btnWhats = document.getElementById("btnWhats");
 
-function saveAdmin() {
-  Object.keys(ITEMS).forEach(key => {
-    const stk = document.getElementById("stk-" + key);
-    const sgt = document.getElementById("sgt-" + key);
-    if (!stk || !sgt) return;
+    const statusText = document.getElementById("statusText");
+    const dot = document.getElementById("dot");
+    const hoursText = document.getElementById("hoursText");
 
-    let qtd = parseInt(stk.value || "0", 10);
-    if (isNaN(qtd) || qtd < 0) qtd = 0;
+    const notice = document.getElementById("notice");
+    const noticeTitle = document.getElementById("noticeTitle");
+    const noticeMsg = document.getElementById("noticeMsg");
 
-    if (sgt.value === "1") qtd = 0;
-    stock[key] = qtd;
-  });
+    const fNome = document.getElementById("fNome");
+    const fTipo = document.getElementById("fTipo");
+    const fPagto = document.getElementById("fPagto");
+    const fEndereco = document.getElementById("fEndereco");
+    const fHorario = document.getElementById("fHorario");
+    const fTel = document.getElementById("fTel");
+    const fObs = document.getElementById("fObs");
+    const boxEndereco = document.getElementById("boxEndereco");
+    const blockMsg = document.getElementById("blockMsg");
 
-  saveStock(stock);
-  updateOpenStatusUI();
-  alert("Salvo! ✅");
-  closeAdmin();
-}
+    // ========= RENDER =========
+    function renderProducts(){
+      const panchos = PRODUCTS.filter(p => p.categoria === "panchos");
+      const bebidas = PRODUCTS.filter(p => p.categoria === "bebidas");
 
-function resetAdmin() {
-  if (!confirm("Restaurar estoque padrão?")) return;
-  stock = { ...DEFAULT_STOCK };
-  saveStock(stock);
-  updateOpenStatusUI();
-  alert("Padrão restaurado ✅");
-  closeAdmin();
-}
+      gridPanchos.innerHTML = panchos.map(cardHTML).join("");
+      gridBebidas.innerHTML = bebidas.map(cardHTML).join("");
 
-/* =========================
-   Inicialização
-   ========================= */
-// ===== EXPOE FUNÇÕES PARA OS BOTÕES HTML =====
-window.openCart = openCart;
-window.closeCart = closeCart;
+      // bind buttons
+      document.querySelectorAll("[data-add]").forEach(btn=>{
+        btn.addEventListener("click", ()=>{
+          const id = btn.getAttribute("data-add");
+          addToCart(id);
+        });
+      });
 
-window.add = add;
-window.addItem = addItem;
-window.addToCart = addToCart;
+      updateButtons();
+    }
 
-window.removeItem = removeItem;
-window.removeFromCart = removeFromCart;
+    function cardHTML(p){
+      return `
+        <div class="card" id="card_${p.id}">
+          <div>
+            <h3>${p.nome}</h3>
+            ${p.desc ? `<p class="desc">${p.desc}</p>` : ``}
+          </div>
+          <div class="price">${money(p.preco)}</div>
+          <div class="badges" id="badges_${p.id}"></div>
+          <button class="btn" data-add="${p.id}" id="btn_${p.id}">Adicionar</button>
+        </div>
+      `;
+    }
 
-window.sendOrder = sendOrder;
-</script>
-<!-- Firebase -->
-<script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore-compat.js"></script>
+    function updateButtons(){
+      // aberto/fechado
+      state.isOpen = computeIsOpen();
 
-<script>
-  // Configuração do Firebase (SEU PROJETO)
-  const firebaseConfig = {
-    apiKey: "AIzaSyBYU_46dL6JAx2ijfmRntDh9mFlqSbsvD4",
-    authDomain: "panchodebage.firebaseapp.com",
-    projectId: "panchodebage",
-    storageBucket: "panchodebage.firebasestorage.app",
-    messagingSenderId: "555443410907",
-    appId: "1:555443410907:web:76754b4bae7934cd58f9fe"
-  };
+      dot.classList.toggle("on", state.isOpen);
+      statusText.textContent = state.isOpen ? "Aberto" : "Fechado";
+      hoursText.textContent = todayHoursLabel();
 
-  // Inicializa Firebase
-  firebase.initializeApp(firebaseConfig);
+      if(!state.isOpen){
+        showNotice("Estamos fechados no momento.", "Fora do horário, não é possível adicionar itens nem finalizar pedidos.");
+      } else {
+        hideNotice();
+      }
 
-  // Firestore
-  const db = firebase.firestore();
-</script>
-<script>
-  // Agora o Firebase já existe, então pode usar
-  updateOpenStatusUI();
-  setInterval(updateOpenStatusUI, 30000);
-</script>
+      // habilita/desabilita botões
+      PRODUCTS.forEach(p=>{
+        const stock = Number(state.stock?.[p.id] ?? 0);
+        const btn = document.getElementById(`btn_${p.id}`);
+        const badges = document.getElementById(`badges_${p.id}`);
+        if(!btn || !badges) return;
+
+        badges.innerHTML = "";
+
+        if(stock <= 0){
+          badges.innerHTML += `<span class="badge out">Esgotado</span>`;
+        } else if(stock > 0 && stock <= 3){
+          badges.innerHTML += `<span class="badge warn">Últimas unidades</span>`;
+        }
+
+        if(!state.isOpen || stock <= 0){
+          btn.disabled = true;
+        } else {
+          btn.disabled = false;
+        }
+      });
+
+      // botão carrinho
+      cartFab.disabled = !state.isOpen;
+      btnWhats.disabled = !state.isOpen;
+
+      if(!state.isOpen){
+        blockMsg.style.display = "block";
+        blockMsg.textContent = "Fora do horário não é possível finalizar pedidos.";
+      } else {
+        blockMsg.style.display = "none";
+        blockMsg.textContent = "";
+      }
+    }
+
+    function showNotice(title, msg){
+      notice.style.display = "block";
+      noticeTitle.textContent = title;
+      noticeMsg.textContent = " " + msg;
+    }
+    function hideNotice(){
+      notice.style.display = "none";
+    }
+
+    function renderCart(){
+      const entries = Object.entries(state.cart).filter(([_,q])=>q>0);
+
+      cartCount.textContent = String(entries.reduce((a,[_,q])=>a+q,0));
+
+      if(entries.length === 0){
+        cartList.innerHTML = `<div class="small">Seu carrinho está vazio.</div>`;
+        totalText.textContent = money(0);
+        return;
+      }
+
+      let total = 0;
+
+      cartList.innerHTML = entries.map(([id, qty])=>{
+        const p = PRODUCTS.find(x=>x.id===id);
+        if(!p) return "";
+        const line = p.preco * qty;
+        total += line;
+        return `
+          <div class="row">
+            <div>
+              <div class="rowTitle">${p.nome}</div>
+              <div class="rowSub">${money(p.preco)} • Subtotal ${money(line)}</div>
+            </div>
+            <div class="qty">
+              <button class="qbtn" data-dec="${id}">−</button>
+              <div class="qnum">${qty}</div>
+              <button class="qbtn" data-inc="${id}">+</button>
+            </div>
+          </div>
+        `;
+      }).join("");
+
+      totalText.textContent = money(total);
+
+      // binds
+      cartList.querySelectorAll("[data-inc]").forEach(b=>{
+        b.addEventListener("click", ()=>inc(b.getAttribute("data-inc")));
+      });
+      cartList.querySelectorAll("[data-dec]").forEach(b=>{
+        b.addEventListener("click", ()=>dec(b.getAttribute("data-dec")));
+      });
+    }
+
+    // ========= CART ACTIONS =========
+    function addToCart(id){
+      if(!state.isOpen) return;
+
+      const stock = Number(state.stock?.[id] ?? 0);
+      const current = Number(state.cart?.[id] ?? 0);
+
+      if(stock <= 0) return;
+      if(current + 1 > stock){
+        alert("Sem estoque suficiente para adicionar mais desse item.");
+        return;
+      }
+
+      state.cart[id] = current + 1;
+      renderCart();
+    }
+
+    function inc(id){
+      addToCart(id);
+    }
+    function dec(id){
+      const current = Number(state.cart?.[id] ?? 0);
+      if(current <= 1) delete state.cart[id];
+      else state.cart[id] = current - 1;
+      renderCart();
+    }
+
+    function openDrawer(){
+      overlay.classList.add("show");
+      drawer.classList.add("open");
+      drawer.setAttribute("aria-hidden","false");
+      renderCart();
+    }
+    function closeDrawer(){
+      overlay.classList.remove("show");
+      drawer.classList.remove("open");
+      drawer.setAttribute("aria-hidden","true");
+    }
+
+    // ========= ORDER / WHATSAPP =========
+    function buildOrderText(){
+      const entries = Object.entries(state.cart).filter(([_,q])=>q>0);
+      if(entries.length === 0) return { ok:false, msg:"Carrinho vazio." };
+
+      const nome = (fNome.value || "").trim();
+      const tipo = fTipo.value; // retirada/entrega
+      const pagto = fPagto.value;
+      const endereco = (fEndereco.value || "").trim();
+      const horario = (fHorario.value || "").trim();
+      const tel = (fTel.value || "").trim();
+      const obs = (fObs.value || "").trim();
+
+      if(!nome) return { ok:false, msg:"Informe o nome do destinatário." };
+      if(tipo === "entrega" && !endereco) return { ok:false, msg:"Informe o endereço para entrega." };
+
+      let total = 0;
+      let lines = [];
+
+      entries.forEach(([id, qty], i)=>{
+        const p = PRODUCTS.find(x=>x.id===id);
+        if(!p) return;
+        const sub = p.preco * qty;
+        total += sub;
+        lines.push(`${i+1}) ${p.nome} x${qty} — ${money(sub)}`);
+      });
+
+      const parts = [];
+      parts.push(`Olá! Quero fazer um pedido no *Pancho de Bagé* 🍔🌭`);
+      parts.push("");
+      parts.push(`*Nome:* ${nome}`);
+      if(tel) parts.push(`*Telefone:* ${tel}`);
+      if(horario) parts.push(`*Horário desejado:* ${horario}`);
+      parts.push(`*Tipo:* ${tipo === "entrega" ? "Entrega" : "Retirada"}`);
+      if(tipo === "entrega") parts.push(`*Endereço:* ${endereco}`);
+      parts.push(`*Pagamento:* ${pagto.toUpperCase()}`);
+      if(obs) parts.push(`*Observações:* ${obs}`);
+      parts.push("");
+      parts.push("*Itens:*");
+      parts.push(...lines);
+      parts.push("");
+      parts.push(`*Total:* ${money(total)}`);
+
+      return { ok:true, text: parts.join("\n") };
+    }
+
+    function sendWhats(){
+      if(!state.isOpen){
+        alert("Fora do horário, não é possível finalizar.");
+        return;
+      }
+
+      const res = buildOrderText();
+      if(!res.ok){
+        alert(res.msg);
+        return;
+      }
+
+      const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(res.text)}`;
+      window.open(url, "_blank");
+    }
+
+    // ========= FORM UI =========
+    fTipo.addEventListener("change", ()=>{
+      boxEndereco.style.display = (fTipo.value === "entrega") ? "block" : "none";
+    });
+
+    // ========= EVENTS =========
+    cartFab.addEventListener("click", openDrawer);
+    overlay.addEventListener("click", closeDrawer);
+    closeDrawerBtn.addEventListener("click", closeDrawer);
+    btnWhats.addEventListener("click", sendWhats);
+
+    // ========= FIRESTORE REALTIME =========
+    function startRealtime(){
+      // Atualiza UI pelo relógio também (caso vire o minuto/dia)
+      setInterval(()=>updateButtons(), 15000);
+
+      DOC_PATH.onSnapshot((snap)=>{
+        const data = snap.data() || {};
+        state.stock = data.stock || {};
+        state.schedule = data.schedule || {};
+        state.openOverride = !!data.openOverride;
+
+        // Ajusta carrinho se passou do estoque
+        Object.keys(state.cart).forEach(id=>{
+          const st = Number(state.stock?.[id] ?? 0);
+          if(st <= 0) delete state.cart[id];
+          else if(state.cart[id] > st) state.cart[id] = st;
+        });
+
+        updateButtons();
+        renderCart();
+      }, (err)=>{
+        console.error("Erro Firestore:", err);
+        showNotice("Erro ao carregar dados.", "Confira as regras do Firestore e a conexão.");
+      });
+    }
+
+    // ========= INIT =========
+    renderProducts();
+    renderCart();
+    startRealtime();
+  </script>
+
 </body>
 </html>
