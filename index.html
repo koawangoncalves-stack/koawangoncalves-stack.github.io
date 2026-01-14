@@ -1,76 +1,201 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pancho de Bagé</title>
+
   <style>
-    body { font-family: Arial, sans-serif; margin: 0; background: #fff8f0; }
+    body { font-family: Arial, sans-serif; margin: 0; background: #fff8f0; padding-bottom: 180px; }
     header { background: #b71c1c; color: #fff; padding: 25px; text-align: center; }
     h1 { margin: 0; font-size: 28px; }
+
     .container { padding: 20px; }
-    .item { background: #fff; padding: 15px; margin-bottom: 12px; border-radius: 10px; box-shadow: 0 3px 8px rgba(0,0,0,.1); }
+    h2 { margin-top: 30px; }
+
+    .item {
+      background: #fff;
+      padding: 15px;
+      margin-bottom: 12px;
+      border-radius: 10px;
+      box-shadow: 0 3px 8px rgba(0,0,0,.1);
+    }
+
     .item h3 { margin: 0 0 5px; }
     .price { font-weight: bold; color: #2e7d32; }
-    .item button { background: #b71c1c; color: #fff; border: none; padding: 10px 14px; border-radius: 6px; cursor: pointer; margin-top: 8px; }
-    .cart { position: fixed; bottom: 0; left: 0; right: 0; background: #fff; padding: 15px; box-shadow: 0 -3px 8px rgba(0,0,0,.25); }
-    .cart button { width: 100%; background: #2e7d32; color: #fff; border: none; padding: 16px; font-size: 17px; border-radius: 8px; }
+
+    .item button {
+      background: #b71c1c;
+      color: #fff;
+      border: none;
+      padding: 10px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 8px;
+    }
+
     .map { padding: 20px; }
-    iframe { width: 100%; border-radius: 10px; }
+    iframe { width: 100%; height: 250px; border-radius: 10px; border: 0; }
+
+    .cart {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #fff;
+      padding: 15px;
+      box-shadow: 0 -3px 8px rgba(0,0,0,.25);
+    }
+
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 14px;
+      margin-bottom: 6px;
+    }
+
+    .cart-controls button {
+      background: #b71c1c;
+      color: #fff;
+      border: none;
+      padding: 4px 8px;
+      border-radius: 4px;
+      margin-left: 4px;
+      cursor: pointer;
+    }
+
+    .total { font-weight: bold; margin-top: 8px; }
+
+    .cart button.finalizar {
+      width: 100%;
+      background: #2e7d32;
+      color: #fff;
+      border: none;
+      padding: 16px;
+      font-size: 17px;
+      border-radius: 8px;
+      margin-top: 10px;
+      cursor: pointer;
+    }
   </style>
 </head>
+
 <body>
 
 <header>
   <h1>🌭 Pancho de Bagé</h1>
-  <p> PREÇO, SABOR E QUELIDADE EM UM SÓ LUGAR</p>
+  <p>PREÇO, SABOR E QUALIDADE EM UM SÓ LUGAR</p>
 </header>
 
 <div class="container">
+
+  <h2>🌭 Panches</h2>
+
   <div class="item">
     <h3>Pancho Tradicional</h3>
-    <p>Pão,Condimentos, Salsicha Defumada e Queijo Mussarela</p>
+    <p>Pão, condimentos, salsicha defumada e queijo mussarela</p>
     <p class="price">R$ 18,00</p>
-    <button onclick="add('Pancho Tradicional - R$18')">Adicionar</button>
+    <button onclick="addItem('Pancho Tradicional', 18)">Adicionar</button>
   </div>
 
   <div class="item">
     <h3>Pancho Mega</h3>
-    <p>Pão, Condimentos, Salsicha defumada (extra) e Queijo Mussarela(extra)</p>
+    <p>Pão, condimentos, salsicha extra e queijo extra</p>
     <p class="price">R$ 20,00</p>
-    <button onclick="add('Pancho Mega - R$20')">Adicionar</button>
+    <button onclick="addItem('Pancho Mega', 20)">Adicionar</button>
   </div>
 
   <div class="item">
     <h3>Pancho Bacon e Calabresa</h3>
-     <p>Pão, Condimentos, Bacon/Calabresa e Queijo Mussarela</p>
+    <p>Pão, condimentos, bacon/calabresa e queijo mussarela</p>
     <p class="price">R$ 22,00</p>
-    <button onclick="add('Pancho Bacon e Calabresa - R$22')">Adicionar</button>
+    <button onclick="addItem('Pancho Bacon e Calabresa', 22)">Adicionar</button>
   </div>
 
   <div class="item">
     <h3>Pancho Coração</h3>
-    <p>Pão, Condimentos, Coração e Queijo Mussarela</p>
+    <p>Pão, condimentos, coração e queijo mussarela</p>
     <p class="price">R$ 24,00</p>
-    <button onclick="add('Pancho Coração - R$24')">Adicionar</button>
+    <button onclick="addItem('Pancho Coração', 24)">Adicionar</button>
   </div>
+
+  <h2>🥤 Bebidas</h2>
+
+  <div class="item">
+    <h3>Coca-Cola</h3>
+    <p class="price">R$ 6,00</p>
+    <button onclick="addItem('Coca-Cola', 6)">Adicionar</button>
+  </div>
+
+  <div class="item">
+    <h3>Coca-Cola Zero</h3>
+    <p class="price">R$ 6,00</p>
+    <button onclick="addItem('Coca-Cola Zero', 6)">Adicionar</button>
+  </div>
+
+  <div class="item">
+    <h3>Fruki</h3>
+    <p class="price">R$ 5,00</p>
+    <button onclick="addItem('Fruki', 5)">Adicionar</button>
+  </div>
+
+  <div class="item">
+    <h3>Água Mineral</h3>
+    <p class="price">R$ 4,00</p>
+    <button onclick="addItem('Água Mineral', 4)">Adicionar</button>
+  </div>
+
 </div>
 
 <div class="map">
   <h3>📍 Nossa localização</h3>
-  <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d211.0479914127845!2d-52.15849772790478!3d-32.183534001143!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-BR!2sbr!4v1768363410929!5m2!1spt-BR!2sbr"
+  <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d211.0479914127845!2d-52.15849772790478!3d-32.183534001143!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-BR!2sbr"></iframe>
 </div>
 
 <div class="cart">
-  <button onclick="sendOrder()">Finalizar pedido pelo WhatsApp</button>
+  <div id="cart-items"></div>
+  <div class="total" id="total">Total: R$ 0,00</div>
+  <button class="finalizar" onclick="sendOrder()">Finalizar pedido pelo WhatsApp</button>
 </div>
 
 <script>
   let cart = [];
 
-  function add(item) {
-    cart.push(item);
-    alert(item + ' adicionado ao pedido');
+  function addItem(name, price) {
+    const item = cart.find(i => i.name === name);
+    if (item) item.qty++;
+    else cart.push({ name, price, qty: 1 });
+    renderCart();
+  }
+
+  function removeItem(name) {
+    const item = cart.find(i => i.name === name);
+    if (!item) return;
+    item.qty--;
+    if (item.qty <= 0) cart = cart.filter(i => i.name !== name);
+    renderCart();
+  }
+
+  function renderCart() {
+    const cartDiv = document.getElementById('cart-items');
+    const totalDiv = document.getElementById('total');
+    cartDiv.innerHTML = '';
+    let total = 0;
+
+    cart.forEach(item => {
+      total += item.price * item.qty;
+      cartDiv.innerHTML += `
+        <div class="cart-item">
+          <span>${item.qty}x ${item.name}</span>
+          <div class="cart-controls">
+            <button onclick="addItem('${item.name}', ${item.price})">+</button>
+            <button onclick="removeItem('${item.name}')">−</button>
+          </div>
+        </div>`;
+    });
+
+    totalDiv.innerHTML = 'Total: R$ ' + total.toFixed(2);
   }
 
   function sendOrder() {
@@ -78,11 +203,16 @@
       alert('Adicione itens ao pedido');
       return;
     }
+
     let message = 'Olá, quero fazer um pedido no Pancho de Bagé:%0A%0A';
-    cart.forEach((item, i) => {
-      message += (i + 1) + ' - ' + item + '%0A';
+    cart.forEach(item => {
+      message += `${item.qty}x ${item.name} - R$ ${(item.price * item.qty).toFixed(2)}%0A`;
     });
-    message += '%0AEntrega ou Retirada?';
+
+    const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
+    message += `%0ATotal: R$ ${total.toFixed(2)}%0A`;
+    message += `%0AEntrega ou retirada?`;
+
     window.open('https://wa.me/5553999021357?text=' + message, '_blank');
   }
 </script>
