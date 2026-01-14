@@ -170,7 +170,7 @@ textarea { min-height: 90px; resize: vertical; }
 
     <div class="item">
       <h3>Fruki</h3>
-      <p class="price">R$ 5,00</p>
+      <p class="price">R$ 6,00</p>
       <div id="tag-fruki"></div>
       <button id="btn-fruki" onclick="addItem('Fruki',5,'fruki')">Adicionar</button>
     </div>
@@ -281,13 +281,13 @@ textarea { min-height: 90px; resize: vertical; }
 
 // Horário de funcionamento por dia da semana (0=Dom ... 6=Sáb)
 const HORARIOS = {
-  0: { abre: "18:00", fecha: "23:00" },
-  1: { abre: "18:00", fecha: "23:00" },
-  2: { abre: "18:00", fecha: "23:00" },
-  3: { abre: "18:00", fecha: "23:00" },
-  4: { abre: "18:00", fecha: "23:00" },
-  5: { abre: "18:00", fecha: "23:59" },
-  6: { abre: "18:00", fecha: "23:59" }
+  0: { abre: "19:00", fecha: "00:00" },
+  1: { abre: "19:00", fecha: "00:00" },
+  2: { abre: "19:00", fecha: "00:00" },
+  3: { abre: "NÃO ABRIMOS", fecha: "" },
+  4: { abre: "19:00", fecha: "00:00" },
+  5: { abre: "19:00", fecha: "00:30" },
+  6: { abre: "19:00", fecha: "01:00" }
 };
 
 const WHATSAPP_NUMERO = "5553999021357";
@@ -640,6 +640,27 @@ function resetAdmin() {
    ========================= */
 updateOpenStatusUI();
 setInterval(updateOpenStatusUI, 30000);
+</script>
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore-compat.js"></script>
+
+<script>
+  // Configuração do Firebase (SEU PROJETO)
+  const firebaseConfig = {
+    apiKey: "AIzaSyBYU_46dL6JAx2ijfmRntDh9mFlqSbsvD4",
+    authDomain: "panchodebage.firebaseapp.com",
+    projectId: "panchodebage",
+    storageBucket: "panchodebage.firebasestorage.app",
+    messagingSenderId: "555443410907",
+    appId: "1:555443410907:web:76754b4bae7934cd58f9fe"
+  };
+
+  // Inicializa Firebase
+  firebase.initializeApp(firebaseConfig);
+
+  // Firestore
+  const db = firebase.firestore();
 </script>
 
 </body>
