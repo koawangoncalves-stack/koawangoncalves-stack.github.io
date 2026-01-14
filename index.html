@@ -637,8 +637,6 @@ function resetAdmin() {
 /* =========================
    Inicialização
    ========================= */
-updateOpenStatusUI();
-setInterval(updateOpenStatusUI, 30000);
 </script>
 <!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-app-compat.js"></script>
@@ -661,6 +659,10 @@ setInterval(updateOpenStatusUI, 30000);
   // Firestore
   const db = firebase.firestore();
 </script>
-
+<script>
+  // Agora o Firebase já existe, então pode usar
+  updateOpenStatusUI();
+  setInterval(updateOpenStatusUI, 30000);
+</script>
 </body>
 </html>
