@@ -592,29 +592,66 @@
     // FINALIZAR + BAIXA DE ESTOQUE (TRANSACTION)
     // =========================
     async function sendOrder() {
-      const itemIds = Object.keys(cart);
-      if (itemIds.length === 0) {
-        alert("Carrinho vazio");
-        return;
+  // carrinho é OBJETO {id: qty}
+  const ids = Object.keys(cart || {});
+  if (ids.length === 0) {
+    alert("Carrinho vazio");
+    return;
+  }
+
+  // validações antes de descontar
+  const msg = buildMessage();
+  if (!msg) return; // buildMessage já dá alert
+
+  try {
+    await db.runTransaction(async (tx) => {
+      const docRef = db.collection("public").doc("menu");
+      const snap = await tx.get(docRef);
+      if (!snap.exists) throw new Error("Estoque não encontrado no Firestore.");
+
+      const data = snap.data() || {};
+      const currentStock = { ...(data.stock || {}) };
+
+      // 1) checa se tem estoque suficiente
+      for (const id of ids) {
+        const need = Number(cart[id] || 0);
+        const have = Number(currentStock[id] ?? 0);
+
+        if (need <= 0) continue;
+
+        if (have < need) {
+          const p = PRODUCTS.find(x => x.id === id);
+          const nome = p ? p.nome : id;
+          throw new Error(Estoque insuficiente: ${nome} (disp: ${have}).);
+        }
       }
-      try {
-        await db.runTransaction(async (transaction) => {
-          const snap = await transaction.get(DOC);
-          if (!snap.exists) throw "Estoque não encontrado no Firestore";
 
-          const data = snap.data() || {};
-          const currentStock = { ...(data.stock || {}) };
+      // 2) desconta
+      for (const id of ids) {
+        const need = Number(cart[id] || 0);
+        if (need <= 0) continue;
+        currentStock[id] = Number(currentStock[id] ?? 0) - need;
+      }
 
-          // valida estoque
-          for (const id of itemIds) {
-            const have = Number(currentStock[id] ?? 0);
-            const need = Number(cart[id] ?? 0);
-            if (need <= 0) continue;
-            if (have < need) {
-              const p = PRODUCTS.find(x=>x.id===id);
-              throw Estoque insuficiente: ${p ? p.nome : id} (disp: ${have});
-            }
-          }
+      // 3) grava no firestore
+      tx.update(docRef, { stock: currentStock });
+    });
+
+    // ✅ se chegou aqui, descontou com sucesso
+    // abre WhatsApp
+    const url = https://wa.me/${WHATS}?text=${buildMessage()};
+    window.open(url, "_blank");
+
+    // limpa carrinho e fecha modal
+    cart = {};
+    el("cartCount").textContent = "0";
+    renderCart();
+    closeCart();
+
+  } catch (e) {
+    alert("❌ " + (e?.message || e));
+  }
+}
 
           // desconta
           for (const id of itemIds) {
