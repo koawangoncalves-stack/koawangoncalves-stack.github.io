@@ -1,13 +1,3 @@
-<script>
-  window.addEventListener('error', e => {
-    const n = document.getElementById('notice');
-    if (n) {
-      n.style.display = 'block';
-      n.innerHTML = '<b>Erro de script:</b> ' + (e && e.message ? e.message : 'desconhecido');
-    }
-  });
-</script>
-
 <!doctype html>
 <html lang="pt-BR">
 <head>
@@ -15,7 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Pancho de Bagé</title>
 
+  <!-- Opcional: coloque sua logo em /assets/logo.png -->
   <link rel="icon" href="assets/favicon.png" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800;900&display=swap" rel="stylesheet">
@@ -39,7 +31,6 @@
       color:var(--text);
     }
 
-    /* Header */
     header{
       background:linear-gradient(135deg, #a31515, var(--red));
       color:#fff;
@@ -70,17 +61,8 @@
       box-shadow:0 10px 25px rgba(0,0,0,.18);
       border:1px solid rgba(255,255,255,.18);
     }
-    .brand h1{
-      margin:0;
-      font-size:22px;
-      line-height:1.1;
-      font-weight:900;
-    }
-    .brand p{
-      margin:6px 0 0;
-      opacity:.92;
-      font-size:13px;
-    }
+    .brand h1{margin:0;font-size:22px;line-height:1.1;font-weight:900;}
+    .brand p{margin:6px 0 0;opacity:.92;font-size:13px;}
 
     .statusBox{
       display:flex;
@@ -100,42 +82,30 @@
       background:rgba(255,255,255,.14);
       border:1px solid rgba(255,255,255,.18);
     }
-    .dot{ width:10px;height:10px;border-radius:99px; background:#ef4444; box-shadow:0 0 0 4px rgba(239,68,68,.18); }
+    .dot{width:10px;height:10px;border-radius:99px;background:#ef4444;box-shadow:0 0 0 4px rgba(239,68,68,.18);}
     .dot.open{background:#22c55e; box-shadow:0 0 0 4px rgba(34,197,94,.18)}
-    .subline{ font-size:12px; opacity:.92; text-align:right; width:100%; }
+    .subline{font-size:12px;opacity:.92;text-align:right;width:100%;}
 
-    /* Hero */
-    .hero{ max-width:1100px; margin:-12px auto 0; padding:0 12px; }
+    .hero{max-width:1100px;margin:-12px auto 0;padding:0 12px;}
     .heroBox{
-      background:#fff;
-      border-radius:22px;
-      box-shadow:var(--shadow);
+      background:#fff;border-radius:22px;box-shadow:var(--shadow);
       border:1px solid rgba(15,23,42,.06);
-      padding:14px;
-      display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;
+      padding:14px;display:flex;align-items:center;justify-content:space-between;
+      gap:12px;flex-wrap:wrap;
     }
     .heroBox h2{margin:0;font-size:16px;font-weight:900}
     .heroBox p{margin:6px 0 0;color:var(--muted);font-size:13px}
     .tags{display:flex;gap:8px;flex-wrap:wrap}
-    .tag{ background:#f3f4f6; border:1px solid #e5e7eb; border-radius:999px; padding:7px 10px; font-weight:900; font-size:12px; color:#111827; }
+    .tag{background:#f3f4f6;border:1px solid #e5e7eb;border-radius:999px;padding:7px 10px;font-weight:900;font-size:12px;color:#111827;}
 
-    /* Layout */
     main{max-width:1100px;margin:14px auto 100px;padding:0 12px}
     .notice{
-      margin:14px 0;
-      background:#fff;
-      border-radius:16px;
-      box-shadow:var(--shadow);
+      margin:14px 0;background:#fff;border-radius:16px;box-shadow:var(--shadow);
       border-left:6px solid var(--red);
-      padding:12px 12px;
-      font-size:13px;
+      padding:12px 12px;font-size:13px;
     }
-    h2.sectionTitle{ margin:18px 0 10px; font-size:18px; font-weight:900; }
-    .grid{
-      display:grid;
-      grid-template-columns:repeat(4, minmax(0,1fr));
-      gap:12px;
-    }
+    h2.sectionTitle{margin:18px 0 10px;font-size:18px;font-weight:900;}
+    .grid{display:grid;grid-template-columns:repeat(4, minmax(0,1fr));gap:12px;}
     @media(max-width:980px){.grid{grid-template-columns:repeat(2, minmax(0,1fr));}}
     @media(max-width:520px){.grid{grid-template-columns:1fr;}}
 
@@ -145,51 +115,54 @@
       box-shadow:var(--shadow);
       border:1px solid rgba(15,23,42,.06);
       padding:12px;
-      display:flex; flex-direction:column; gap:10px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
     }
-    .card h3{ margin:0; font-size:16px; font-weight:900; }
+    .card h3{margin:0;font-size:16px;font-weight:900;}
     .desc{margin:0;color:var(--muted);font-size:12px;line-height:1.35}
-    .price{ font-weight:900; color:var(--green); font-size:14px; }
+    .price{font-weight:900;color:var(--green);font-size:14px;}
     .badges{display:flex;gap:8px;flex-wrap:wrap;min-height:20px}
-    .badge{ font-size:11px; font-weight:900; padding:5px 9px; border-radius:999px; border:1px solid #e5e7eb; background:#f3f4f6; color:#111827; }
+    .badge{font-size:11px;font-weight:900;padding:5px 9px;border-radius:999px;border:1px solid #e5e7eb;background:#f3f4f6;color:#111827;}
     .badge.bad{background:#fee2e2;border-color:#fecaca;color:#7f1d1d}
     .badge.warn{background:#fef9c3;border-color:#fde68a;color:#713f12}
-    .btn{ width:100%; border:0; border-radius:14px; padding:12px 12px; font-weight:900; cursor:pointer; background:var(--red); color:#fff; }
+    .btn{width:100%;border:0;border-radius:14px;padding:12px 12px;font-weight:900;cursor:pointer;background:var(--red);color:#fff;}
     .btn:disabled{opacity:.55; cursor:not-allowed}
 
-    /* Map */
-    .mapBox{ margin-top:18px; background:#fff; border-radius:18px; box-shadow:var(--shadow); border:1px solid rgba(15,23,42,.06); overflow:hidden; }
+    .mapBox{margin-top:18px;background:#fff;border-radius:18px;box-shadow:var(--shadow);border:1px solid rgba(15,23,42,.06);overflow:hidden;}
     .mapHead{padding:12px 12px 0}
     .mapHead h3{margin:0;font-size:16px;font-weight:900}
     iframe{width:100%; height:260px; border:0}
 
-    /* Floating cart button */
     .cartBtn{
-      position:fixed; right:16px; bottom:16px;
-      border:0; border-radius:999px; padding:12px 14px;
-      background:var(--green); color:#fff; font-weight:900; cursor:pointer;
-      box-shadow:0 16px 34px rgba(0,0,0,.18); display:flex; align-items:center; gap:10px; z-index:50;
+      position:fixed;right:16px;bottom:16px;
+      border:0;border-radius:999px;padding:12px 14px;
+      background:var(--green);color:#fff;font-weight:900;cursor:pointer;
+      box-shadow:0 16px 34px rgba(0,0,0,.18);
+      display:flex;align-items:center;gap:10px;z-index:50;
     }
-    .cartCount{ width:26px;height:26px;border-radius:999px; background:rgba(255,255,255,.18); display:grid;place-items:center; font-weight:900; }
+    .cartCount{
+      width:26px;height:26px;border-radius:999px;background:rgba(255,255,255,.18);
+      display:grid;place-items:center;font-weight:900;
+    }
 
-    /* Cart modal */
-    .overlay{ position:fixed; inset:0; background:rgba(0,0,0,.45); display:none; align-items:flex-end; justify-content:center; padding:14px; z-index:60; }
-    .modal{ width:min(680px, 100%); background:#fff; border-radius:22px; box-shadow:0 20px 50px rgba(0,0,0,.22); overflow:hidden; border:1px solid rgba(15,23,42,.08); }
-    .modalHead{ padding:12px 14px; display:flex; align-items:center; justify-content:space-between; gap:10px; background:#fff; border-bottom:1px solid #eee; }
+    .overlay{position:fixed; inset:0;background:rgba(0,0,0,.45);display:none;align-items:flex-end;justify-content:center;padding:14px;z-index:60;}
+    .modal{width:min(680px, 100%);background:#fff;border-radius:22px;box-shadow:0 20px 50px rgba(0,0,0,.22);overflow:hidden;border:1px solid rgba(15,23,42,.08);}
+    .modalHead{padding:12px 14px;display:flex;align-items:center;justify-content:space-between;gap:10px;background:#fff;border-bottom:1px solid #eee;}
     .modalHead b{font-size:16px}
-    .closeBtn{ border:0;border-radius:12px; padding:10px 12px; background:#f3f4f6; cursor:pointer; font-weight:900; }
+    .closeBtn{border:0;border-radius:12px;padding:10px 12px;background:#f3f4f6;cursor:pointer;font-weight:900;}
     .modalBody{padding:14px}
     .row{display:flex;gap:10px;flex-wrap:wrap}
     .field{flex:1;min-width:220px}
     label{display:block;font-size:12px;color:var(--muted);font-weight:900;margin-bottom:6px}
-    input,select,textarea{ width:100%; padding:12px; border:1px solid #e5e7eb; border-radius:14px; font-size:14px; outline:none; }
+    input,select,textarea{width:100%;padding:12px;border:1px solid #e5e7eb;border-radius:14px;font-size:14px;outline:none;}
     textarea{min-height:80px;resize:vertical}
     .cartItems{margin-top:10px; display:flex; flex-direction:column; gap:10px}
-    .cartItem{ border:1px solid #eee; border-radius:16px; padding:10px; display:flex; align-items:center; justify-content:space-between; gap:10px; }
+    .cartItem{border:1px solid #eee;border-radius:16px;padding:10px;display:flex;align-items:center;justify-content:space-between;gap:10px;}
     .qtyBox{display:flex;align-items:center;gap:8px}
-    .qtyBtn{ width:36px;height:36px;border-radius:12px; border:1px solid #e5e7eb;background:#fff; cursor:pointer;font-weight:900; }
-    .totalLine{ margin-top:12px; display:flex; align-items:center; justify-content:space-between; font-weight:900; }
-    .sendBtn{ margin-top:12px; width:100%; border:0; border-radius:16px; padding:14px 14px; background:var(--green); color:#fff; font-weight:900; cursor:pointer; font-size:15px; }
+    .qtyBtn{width:36px;height:36px;border-radius:12px;border:1px solid #e5e7eb;background:#fff;cursor:pointer;font-weight:900;}
+    .totalLine{margin-top:12px;display:flex;align-items:center;justify-content:space-between;font-weight:900;}
+    .sendBtn{margin-top:12px;width:100%;border:0;border-radius:16px;padding:14px 14px;background:var(--green);color:#fff;font-weight:900;cursor:pointer;font-size:15px;}
     .sendBtn:disabled{opacity:.55;cursor:not-allowed}
     .small{font-size:12px;color:var(--muted)}
   </style>
@@ -199,7 +172,7 @@
   <header>
     <div class="topWrap">
       <div class="brand">
-        <img src="assets/logo.png" alt="Pancho de Bagé" class="logo">
+        <img src="assets/logo.png" alt="Pancho de Bagé" class="logo" onerror="this.style.display='none'">
         <div>
           <h1>Pancho de Bagé</h1>
           <p>Preço, sabor e qualidade</p>
@@ -212,7 +185,6 @@
           <span id="openText">Carregando…</span>
         </div>
         <div class="subline" id="scheduleText">Horário de pedidos hoje: —</div>
-        <div class="subline small"></div>
       </div>
     </div>
   </header>
@@ -252,15 +224,15 @@
     </div>
   </main>
 
-  <button class="cartBtn" id="cartBtn" onclick="openCart()">
+  <button class="cartBtn" id="cartBtn">
     🛒 Carrinho <span class="cartCount" id="cartCount">0</span>
   </button>
 
-  <div class="overlay" id="overlay" onclick="closeCart(true)">
+  <div class="overlay" id="overlay">
     <div class="modal" onclick="event.stopPropagation()">
       <div class="modalHead">
         <b>Seu carrinho</b>
-        <button class="closeBtn" onclick="closeCart()">Fechar</button>
+        <button class="closeBtn" id="closeBtn">Fechar</button>
       </div>
       <div class="modalBody">
         <div class="row">
@@ -277,7 +249,7 @@
         <div class="row" style="margin-top:10px">
           <div class="field">
             <label>Entrega ou retirada?</label>
-            <select id="deliveryType" onchange="toggleAddress()">
+            <select id="deliveryType">
               <option value="retirada">Retirada</option>
               <option value="entrega">Entrega</option>
             </select>
@@ -287,12 +259,12 @@
             <select id="payMethod">
               <option value="pix">Pix</option>
               <option value="dinheiro">Dinheiro</option>
-              <option value="cartao">Cartão(na entrega não aceitamos cartão)</option>
+              <option value="cartao">Cartão (na entrega não aceitamos cartão)</option>
             </select>
           </div>
         </div>
 
-        <div class="row" style="margin-top:10px" id="addressRow" style="display:none">
+        <div class="row" style="margin-top:10px; display:none" id="addressRow">
           <div class="field" style="min-width:100%">
             <label>Endereço (somente se for entrega)</label>
             <input id="address" placeholder="Rua, número, bairro" />
@@ -311,21 +283,21 @@
           <span id="totalPrice">R$ 0,00</span>
         </div>
 
-        <button class="sendBtn" id="sendBtn" onclick="sendOrder()">Finalizar e mandar no WhatsApp</button>
+        <button class="sendBtn" id="sendBtn">Finalizar e mandar no WhatsApp</button>
         <div class="small" id="cartHint" style="margin-top:8px"></div>
       </div>
     </div>
   </div>
 
-  <!-- Firebase (Compat) - APENAS UMA VEZ CADA -->
+  <!-- Firebase (Compat) - NÃO DUPLICAR -->
   <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore-compat.js"></script>
 
   <script>
-    // =========================
-    // CONFIG DO SEU FIREBASE
-    // =========================
+    /**********************
+     * CONFIG DO FIREBASE
+     **********************/
     const firebaseConfig = {
       apiKey: "AIzaSyBYU_46dL6JAx2ijfmRntDh9mFlqSbsvD4",
       authDomain: "panchodebage.firebaseapp.com",
@@ -334,51 +306,49 @@
       messagingSenderId: "555443410907",
       appId: "1:555443410907:web:76754b4bae7934cd58f9fe"
     };
+
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
     const db = firebase.firestore();
     const DOC = db.collection("public").doc("menu");
 
-    // login anônimo (precisa estar ativado no Authentication)
-    auth.signInAnonymously().catch(()=>{});
+    /**********************
+     * SEU WHATSAPP
+     **********************/
+    const WHATS = "5553999021357"; // troque aqui se quiser
 
-    // =========================
-    // SEU WHATSAPP
-    // =========================
-    const WHATS = "5553999021357";
-
-    // =========================
-    // PRODUTOS
-    // =========================
+    /**********************
+     * PRODUTOS (IDs = Firestore)
+     **********************/
     const PRODUCTS = [
       { id:"pancho_tradicional", cat:"pancho", nome:"Pancho Tradicional", preco:18, desc:"Pão, condimentos, salsicha defumada e queijo mussarela" },
-      { id:"pancho_mega",        cat:"pancho", nome:"Pancho Mega",        preco:20, desc:"Pão, condimentos, salsicha (extra) e queijo (extra)" },
+      { id:"pancho_mega", cat:"pancho", nome:"Pancho Mega", preco:20, desc:"Pão, condimentos, salsicha (extra) e queijo (extra)" },
       { id:"pancho_bacon_calabresa", cat:"pancho", nome:"Pancho Bacon e Calabresa", preco:22, desc:"Pão, condimentos, bacon/calabresa e queijo mussarela" },
-      { id:"pancho_coracao",     cat:"pancho", nome:"Pancho Coração",     preco:24, desc:"Pão, condimentos, coração e queijo mussarela" },
+      { id:"pancho_coracao", cat:"pancho", nome:"Pancho Coração", preco:24, desc:"Pão, condimentos, coração e queijo mussarela" },
 
-      { id:"coca",       cat:"bebida", nome:"Coca-Cola",      preco:6, desc:"Lata/Unidade" },
-      { id:"coca_zero",  cat:"bebida", nome:"Coca-Cola Zero", preco:6, desc:"Lata/Unidade" },
-      { id:"fruki",      cat:"bebida", nome:"Fruki",          preco:6, desc:"Lata/Unidade" },
-      { id:"agua",       cat:"bebida", nome:"Água Mineral",   preco:4, desc:"Unidade" },
+      { id:"coca", cat:"bebida", nome:"Coca-Cola", preco:6, desc:"Lata/Unidade" },
+      { id:"coca_zero", cat:"bebida", nome:"Coca-Cola Zero", preco:6, desc:"Lata/Unidade" },
+      { id:"fruki", cat:"bebida", nome:"Fruki", preco:6, desc:"Lata/Unidade" },
+      { id:"agua", cat:"bebida", nome:"Água Mineral", preco:4, desc:"Unidade" },
     ];
 
-    // =========================
-    // ESTADO
-    // =========================
-    let stock = {};         // {id: number}
-    let schedule = {};      // {"0":{abre:"19:00",fecha:"23:30"} ...}
+    /**********************
+     * ESTADO
+     **********************/
+    let stock = {};            // {id:number}
+    let schedule = {};         // {"0":{abre,fecha}...}
     let openOverride = false;
     let isOpen = false;
-    let cart = {};          // {id: qty}
 
-    // =========================
-    // UTIL
-    // =========================
+    // carrinho como objeto: { id: qty }
+    let cart = {};
+
+    /**********************
+     * UTIL
+     **********************/
     const el = (id)=>document.getElementById(id);
     const money = (v)=>v.toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
     const clamp = (n,min,max)=>Math.max(min,Math.min(max,n));
-
-    function nowBR(){ return new Date(); }
 
     function minutesFromHHMM(s){
       if(!s || !/^\d\d:\d\d$/.test(s)) return null;
@@ -386,10 +356,20 @@
       return hh*60+mm;
     }
 
+    function scheduleTextToday(){
+      const d = new Date();
+      const day = String(d.getDay());
+      const conf = schedule?.[day];
+      if(!conf) return "Horário de pedidos hoje: —";
+      if(conf.abre==="00:00" && conf.fecha==="00:00") return "Hoje: fechado";
+      return `Horário de pedidos hoje: ${conf.abre} às ${conf.fecha}`;
+    }
+
     function isWithinSchedule(){
       if(openOverride) return true;
-      const d = nowBR();
-      const day = String(d.getDay()); // 0..6
+
+      const d = new Date();
+      const day = String(d.getDay());
       const conf = schedule?.[day];
       if(!conf) return false;
 
@@ -400,24 +380,23 @@
       if(abreM===0 && fechaM===0) return false;
 
       const curM = d.getHours()*60 + d.getMinutes();
-      if(fechaM > abreM){
-        return curM >= abreM && curM <= fechaM;
-      }
-      return (curM >= abreM) || (curM <= fechaM); // cruza meia-noite
+
+      // normal
+      if(fechaM > abreM) return curM >= abreM && curM <= fechaM;
+
+      // cruza meia-noite
+      return (curM >= abreM) || (curM <= fechaM);
     }
 
-    function scheduleTextToday(){
-      const d = nowBR();
-      const day = String(d.getDay());
-      const conf = schedule?.[day];
-      if(!conf) return "Horário de pedidos hoje: —";
-      if(conf.abre==="00:00" && conf.fecha==="00:00") return "Hoje: fechado";
-      return Horário de pedidos hoje: ${conf.abre} às ${conf.fecha};
+    function setNotice(html, show=true){
+      const n = el("notice");
+      n.style.display = show ? "block" : "none";
+      n.innerHTML = html || "";
     }
 
-    // =========================
-    // RENDER PRODUTOS
-    // =========================
+    /**********************
+     * RENDER
+     **********************/
     function cardHTML(p){
       return `
         <div class="card" id="card_${p.id}">
@@ -427,90 +406,115 @@
           </div>
           <div class="price">${money(p.preco)}</div>
           <div class="badges" id="badges_${p.id}"></div>
-          <button class="btn" id="btn_${p.id}" onclick="addToCart('${p.id}')">➕ Adicionar</button>
+          <button class="btn" id="btn_${p.id}" data-id="${p.id}">➕ Adicionar</button>
         </div>
       `;
     }
 
     function renderProducts(){
-      const gp = el("gridPanchos");
-      const gb = el("gridBebidas");
-      gp.innerHTML = PRODUCTS.filter(p=>p.cat==="pancho").map(cardHTML).join("");
-      gb.innerHTML = PRODUCTS.filter(p=>p.cat==="bebida").map(cardHTML).join("");
-      updateAllButtons();
-    }
+      el("gridPanchos").innerHTML = PRODUCTS.filter(p=>p.cat==="pancho").map(cardHTML).join("");
+      el("gridBebidas").innerHTML = PRODUCTS.filter(p=>p.cat==="bebida").map(cardHTML).join("");
 
-    function updateAllButtons(){
+      // liga botões
       PRODUCTS.forEach(p=>{
-        const btn = el("btn_"+p.id);
-        const badges = el("badges_"+p.id);
-        if(!btn || !badges) return;
-
-        const qtyStock = Number(stock?.[p.id] ?? 0);
-        badges.innerHTML = "";
-
-        if(qtyStock <= 0){
-          badges.innerHTML += <span class="badge bad">Esgotado</span>;
-          btn.disabled = true;
-          btn.textContent = "Esgotado";
-        }else{
-          if(qtyStock <= 3){
-            badges.innerHTML += <span class="badge warn">Últimas unidades</span>;
-          }
-          btn.disabled = !isOpen;
-          btn.textContent = isOpen ? "➕ Adicionar" : "Fora do horário";
-        }
+        const b = el("btn_"+p.id);
+        b.addEventListener("click", ()=> addToCart(p.id));
       });
 
-      const notice = el("notice");
-      if(!isOpen){
-        notice.style.display = "block";
-        notice.innerHTML = <b>Estamos fechados no momento.</b> Fora do horário, não é possível adicionar itens nem finalizar pedidos.;
-      }else{
-        notice.style.display = "none";
-      }
+      updateUI();
+    }
 
+    function updateUI(){
+      // status aberto/fechado
+      isOpen = isWithinSchedule();
       el("scheduleText").textContent = scheduleTextToday();
 
       const dot = el("dot");
       const openText = el("openText");
-      if(isOpen){ dot.classList.add("open"); openText.textContent = "Aberto"; }
-      else      { dot.classList.remove("open"); openText.textContent = "Fechado"; }
+      if(isOpen){
+        dot.classList.add("open");
+        openText.textContent = "Aberto";
+      } else {
+        dot.classList.remove("open");
+        openText.textContent = "Fechado";
+      }
+
+      // aviso
+      if(!isOpen){
+        setNotice("<b>Estamos fechados no momento.</b> Fora do horário, não é possível adicionar itens nem finalizar pedidos.", true);
+      } else {
+        setNotice("", false);
+      }
+
+      // botões/estoque
+      PRODUCTS.forEach(p=>{
+        const qty = Number(stock?.[p.id] ?? 0);
+        const btn = el("btn_"+p.id);
+        const badges = el("badges_"+p.id);
+        if(!btn || !badges) return;
+
+        badges.innerHTML = "";
+
+        if(qty <= 0){
+          badges.innerHTML = `<span class="badge bad">Esgotado</span>`;
+          btn.disabled = true;
+          btn.textContent = "Esgotado";
+          return;
+        }
+
+        if(qty <= 3) badges.innerHTML = `<span class="badge warn">Últimas unidades</span>`;
+
+        btn.disabled = !isOpen;
+        btn.textContent = isOpen ? "➕ Adicionar" : "Fora do horário";
+      });
+
+      // carrinho
+      el("cartCount").textContent = cartCount();
+      renderCart();
     }
 
-    // =========================
-    // CARRINHO
-    // =========================
-    function cartCount(){ return Object.values(cart).reduce((a,b)=>a+b,0); }
+    /**********************
+     * CARRINHO
+     **********************/
+    function cartCount(){
+      return Object.values(cart).reduce((a,b)=>a+Number(b||0), 0);
+    }
 
-    function openCart(){ el("overlay").style.display="flex"; renderCart(); }
-    function closeCart(){ el("overlay").style.display="none"; }
+    function openCart(){
+      el("overlay").style.display = "flex";
+      renderCart();
+    }
+    function closeCart(){
+      el("overlay").style.display = "none";
+    }
 
     function addToCart(id){
       if(!isOpen) return;
-      const qtyStock = Number(stock?.[id] ?? 0);
-      const current = Number(cart?.[id] ?? 0);
-      if(qtyStock <= 0) return;
 
-      if(current + 1 > qtyStock){
+      const have = Number(stock?.[id] ?? 0);
+      if(have <= 0) return;
+
+      const cur = Number(cart?.[id] ?? 0);
+      if(cur + 1 > have){
         alert("Sem estoque suficiente desse item.");
         return;
       }
-      cart[id] = current + 1;
-      el("cartCount").textContent = cartCount();
-      renderCart();
+
+      cart[id] = cur + 1;
+      updateUI();
     }
 
     function changeQty(id, delta){
-      const current = Number(cart?.[id] ?? 0);
-      const next = current + delta;
-      if(next <= 0){ delete cart[id]; }
-      else{
-        const qtyStock = Number(stock?.[id] ?? 0);
-        cart[id] = clamp(next, 1, qtyStock);
+      const cur = Number(cart?.[id] ?? 0);
+      const next = cur + delta;
+
+      if(next <= 0){
+        delete cart[id];
+      } else {
+        const have = Number(stock?.[id] ?? 0);
+        cart[id] = clamp(next, 1, have);
       }
-      el("cartCount").textContent = cartCount();
-      renderCart();
+      updateUI();
     }
 
     function toggleAddress(){
@@ -521,8 +525,9 @@
     function renderCart(){
       const wrap = el("cartItems");
       const items = Object.keys(cart);
+
       if(items.length === 0){
-        wrap.innerHTML = <div class="small">Seu carrinho está vazio.</div>;
+        wrap.innerHTML = `<div class="small">Seu carrinho está vazio.</div>`;
         el("totalPrice").textContent = money(0);
         el("sendBtn").disabled = true;
         el("cartHint").textContent = "";
@@ -532,29 +537,37 @@
       let total = 0;
       wrap.innerHTML = items.map(id=>{
         const p = PRODUCTS.find(x=>x.id===id);
-        const q = cart[id];
-        const line = p.preco*q;
-        total += line;
+        const q = Number(cart[id] || 0);
+        total += p.preco * q;
+
         return `
           <div class="cartItem">
             <div>
-              <b>${p.nome}</b><div class="small">${money(p.preco)} x ${q}</div>
+              <b>${p.nome}</b>
+              <div class="small">${money(p.preco)} x ${q}</div>
             </div>
             <div class="qtyBox">
-              <button class="qtyBtn" onclick="changeQty('${id}', -1)">−</button>
+              <button class="qtyBtn" data-a="minus" data-id="${id}">−</button>
               <b>${q}</b>
-              <button class="qtyBtn" onclick="changeQty('${id}', 1)">+</button>
+              <button class="qtyBtn" data-a="plus" data-id="${id}">+</button>
             </div>
           </div>
         `;
       }).join("");
+
+      // liga +/- (delegação)
+      wrap.querySelectorAll(".qtyBtn").forEach(btn=>{
+        const id = btn.getAttribute("data-id");
+        const a = btn.getAttribute("data-a");
+        btn.onclick = ()=> changeQty(id, a==="plus" ? 1 : -1);
+      });
 
       el("totalPrice").textContent = money(total);
       el("sendBtn").disabled = !isOpen;
       el("cartHint").textContent = isOpen ? "" : "Fora do horário, não dá para finalizar.";
     }
 
-    function buildMessage(){
+    function buildWhatsMessage(){
       const name = el("custName").value.trim();
       const time = el("orderTime").value.trim();
       const type = el("deliveryType").value;
@@ -566,163 +579,146 @@
       if(!time){ alert("Selecione o horário do pedido."); return null; }
       if(type === "entrega" && !addr){ alert("Digite o endereço para entrega."); return null; }
 
-      let msg = Olá! Quero fazer um pedido no *Pancho de Bagé*:%0A%0A;
-      msg += *Nome:* ${encodeURIComponent(name)}%0A;
-      msg += *Horário:* ${encodeURIComponent(time)}%0A;
-      msg += *Tipo:* ${encodeURIComponent(type)}%0A;
-      if(type==="entrega") msg += *Endereço:* ${encodeURIComponent(addr)}%0A;
-      msg += *Pagamento:* ${encodeURIComponent(pay)}%0A%0A;
+      let total = 0;
+      let lines = [];
 
-      msg += *Itens:*%0A;
-      let total = 0; let i=1;
-      Object.keys(cart).forEach(id=>{
+      Object.keys(cart).forEach((id, i)=>{
         const p = PRODUCTS.find(x=>x.id===id);
-        const q = cart[id];
+        const q = Number(cart[id]||0);
         total += p.preco*q;
-        msg += ${i++} - ${encodeURIComponent(p.nome)} (x${q}) - ${encodeURIComponent(money(p.preco*q))}%0A;
+        lines.push(`${i+1} - ${p.nome} (x${q}) - ${money(p.preco*q)}`);
       });
-      msg += %0A*Total:* ${encodeURIComponent(money(total))}%0A;
 
-      if(notes){ msg += %0A*Observações:* ${encodeURIComponent(notes)}%0A; }
-      return msg;
+      let msg =
+`Olá! Quero fazer um pedido no *Pancho de Bagé*:
+
+*Nome:* ${name}
+*Horário:* ${time}
+*Tipo:* ${type}
+${type==="entrega" ? `*Endereço:* ${addr}\n` : ""}*Pagamento:* ${pay}
+
+*Itens:*
+${lines.join("\n")}
+
+*Total:* ${money(total)}
+${notes ? `\n*Observações:* ${notes}\n` : ""}`;
+
+      return encodeURIComponent(msg);
     }
 
-    function openWhatsAppOrder(){
-      const message = buildMessage();
-      if(!message) return;
-      window.open(https://wa.me/${WHATS}?text=${message}, "_blank");
-      // limpa carrinho após envio
-      cart = {};
-      el("cartCount").textContent = "0";
-      renderCart();
-      closeCart();
-    }
-
-    // =========================
-    // FINALIZAR + BAIXA DE ESTOQUE (TRANSACTION)
-    // =========================
-    async function sendOrder() {
-  // carrinho é OBJETO {id: qty}
-  const ids = Object.keys(cart || {});
-  if (ids.length === 0) {
-    alert("Carrinho vazio");
-    return;
-  }
-
-  // validações antes de descontar
-  const msg = buildMessage();
-  if (!msg) return; // buildMessage já dá alert
-
-  try {
-    await db.runTransaction(async (tx) => {
-      const docRef = db.collection("public").doc("menu");
-      const snap = await tx.get(docRef);
-      if (!snap.exists) throw new Error("Estoque não encontrado no Firestore.");
-
-      const data = snap.data() || {};
-      const currentStock = { ...(data.stock || {}) };
-
-      // 1) checa se tem estoque suficiente
-      for (const id of ids) {
-        const need = Number(cart[id] || 0);
-        const have = Number(currentStock[id] ?? 0);
-
-        if (need <= 0) continue;
-
-        if (have < need) {
-          const p = PRODUCTS.find(x => x.id === id);
-          const nome = p ? p.nome : id;
-          throw new Error(Estoque insuficiente: ${nome} (disp: ${have}).);
-        }
+    async function sendOrder(){
+      if(!isOpen){
+        alert("Fora do horário.");
+        return;
       }
 
-      // 2) desconta
-      for (const id of ids) {
-        const need = Number(cart[id] || 0);
-        if (need <= 0) continue;
-        currentStock[id] = Number(currentStock[id] ?? 0) - need;
+      const items = Object.keys(cart);
+      if(items.length === 0){
+        alert("Carrinho vazio.");
+        return;
       }
 
-      // 3) grava no firestore
-      tx.update(docRef, { stock: currentStock });
-    });
+      // garante login anônimo (para permitir update nas regras)
+      if(!auth.currentUser){
+        await auth.signInAnonymously();
+      }
 
-    // ✅ se chegou aqui, descontou com sucesso
-    // abre WhatsApp
-    const url = https://wa.me/${WHATS}?text=${buildMessage()};
-    window.open(url, "_blank");
+      // monta estrutura {id, qty, nome}
+      const orderItems = items.map(id=>{
+        const p = PRODUCTS.find(x=>x.id===id);
+        return { id, qty: Number(cart[id]||0), nome: p.nome };
+      });
 
-    // limpa carrinho e fecha modal
-    cart = {};
-    el("cartCount").textContent = "0";
-    renderCart();
-    closeCart();
+      try{
+        // 1) transação: valida e desconta estoque
+        await db.runTransaction(async (tx)=>{
+          const snap = await tx.get(DOC);
+          if(!snap.exists) throw new Error("Documento public/menu não existe.");
 
-  } catch (e) {
-    alert("❌ " + (e?.message || e));
-  }
-}
+          const data = snap.data() || {};
+          const st = { ...(data.stock || {}) };
 
-          // desconta
-          for (const id of itemIds) {
-            const need = Number(cart[id] ?? 0);
-            if (need > 0) currentStock[id] = Number(currentStock[id]) - need;
+          // valida
+          for(const it of orderItems){
+            const have = Number(st[it.id] ?? 0);
+            if(have < it.qty){
+              throw new Error(`Estoque insuficiente: ${it.nome} (disp: ${have})`);
+            }
           }
 
-          transaction.update(DOC, { stock: currentStock });
+          // desconta
+          for(const it of orderItems){
+            st[it.id] = Number(st[it.id] ?? 0) - it.qty;
+          }
+
+          tx.update(DOC, { stock: st });
         });
 
-        // se salvou, abre WhatsApp
-        openWhatsAppOrder();
-      } catch (e) {
-        alert("❌ " + e);
+        // 2) abre WhatsApp
+        const msg = buildWhatsMessage();
+        if(!msg) return;
+
+        const url = `https://wa.me/${WHATS}?text=${msg}`;
+        window.open(url, "_blank");
+
+        // 3) limpa carrinho
+        cart = {};
+        updateUI();
+        closeCart();
+
+      }catch(e){
+        alert("❌ " + (e?.message || e));
       }
     }
 
-    // =========================
-    // FIRESTORE (live)
-    // =========================
-    function applyMenuData(data){
-      stock = data.stock || {};
-      schedule = data.schedule || {};
-      openOverride = !!data.openOverride;
-      isOpen = isWithinSchedule();
-      updateAllButtons();
-      renderCart();
-    }
-
-    async function loadMenu(){
-      const snap = await DOC.get();
-      if (snap.exists) applyMenuData(snap.data());
-    }
-
+    /**********************
+     * FIRESTORE: realtime
+     **********************/
     function startRealtime(){
       DOC.onSnapshot((snap)=>{
-        if (snap.exists) applyMenuData(snap.data());
+        const data = snap.data() || {};
+        stock = data.stock || {};
+        schedule = data.schedule || {};
+        openOverride = !!data.openOverride;
+        updateUI();
+      }, (err)=>{
+        // Se falhar, ainda mostra produtos (não fica vazio)
+        console.error(err);
+        setNotice("<b>Erro ao ler Firebase.</b> Confira as regras e se o documento public/menu existe.", true);
       });
     }
 
-    // =========================
-    // EXPOSE (botões HTML)
-    // =========================
-    window.openCart = openCart;
-    window.closeCart = closeCart;
-    window.addToCart = addToCart;
-    window.changeQty = changeQty;
-    window.sendOrder = sendOrder;
-    window.toggleAddress = toggleAddress;
+    /**********************
+     * EVENTOS
+     **********************/
+    function wireUI(){
+      el("cartBtn").addEventListener("click", openCart);
+      el("closeBtn").addEventListener("click", closeCart);
+      el("overlay").addEventListener("click", closeCart);
 
-    // =========================
-    // INIT
-    // =========================
-    renderProducts();
-    loadMenu().catch(()=>{
-      el("notice").style.display="block";
-      el("notice").innerHTML = "<b>Erro ao carregar dados.</b> Confira as regras do Firestore e a conexão.";
-    });
-    startRealtime();
-    el("cartCount").textContent = cartCount();
-    toggleAddress();
+      el("deliveryType").addEventListener("change", toggleAddress);
+      el("sendBtn").addEventListener("click", sendOrder);
+      toggleAddress();
+    }
+
+    /**********************
+     * INIT
+     **********************/
+    (async function init(){
+      // Renderiza na hora (mesmo sem firebase)
+      renderProducts();
+      wireUI();
+
+      // login anônimo (para garantir update quando finalizar)
+      try{
+        await auth.signInAnonymously();
+      }catch(e){
+        console.warn("Anon auth falhou:", e);
+      }
+
+      // realtime do cardápio
+      startRealtime();
+    })();
   </script>
 </body>
 </html>
