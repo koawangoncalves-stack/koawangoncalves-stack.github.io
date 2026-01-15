@@ -5,10 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Pancho de Bagé</title>
 
-  <!-- Favicon -->
   <link rel="icon" href="assets/favicon.png" />
-
-  <!-- Fonte (opcional, mas deixa bem mais bonito) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800;900&display=swap" rel="stylesheet">
@@ -93,49 +90,24 @@
       background:rgba(255,255,255,.14);
       border:1px solid rgba(255,255,255,.18);
     }
-    .dot{
-      width:10px;height:10px;border-radius:99px;
-      background:#ef4444;
-      box-shadow:0 0 0 4px rgba(239,68,68,.18);
-    }
+    .dot{ width:10px;height:10px;border-radius:99px; background:#ef4444; box-shadow:0 0 0 4px rgba(239,68,68,.18); }
     .dot.open{background:#22c55e; box-shadow:0 0 0 4px rgba(34,197,94,.18)}
-    .subline{
-      font-size:12px;
-      opacity:.92;
-      text-align:right;
-      width:100%;
-    }
+    .subline{ font-size:12px; opacity:.92; text-align:right; width:100%; }
 
     /* Hero */
-    .hero{
-      max-width:1100px;
-      margin:-12px auto 0;
-      padding:0 12px;
-    }
+    .hero{ max-width:1100px; margin:-12px auto 0; padding:0 12px; }
     .heroBox{
       background:#fff;
       border-radius:22px;
       box-shadow:var(--shadow);
       border:1px solid rgba(15,23,42,.06);
       padding:14px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      flex-wrap:wrap;
+      display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;
     }
     .heroBox h2{margin:0;font-size:16px;font-weight:900}
     .heroBox p{margin:6px 0 0;color:var(--muted);font-size:13px}
     .tags{display:flex;gap:8px;flex-wrap:wrap}
-    .tag{
-      background:#f3f4f6;
-      border:1px solid #e5e7eb;
-      border-radius:999px;
-      padding:7px 10px;
-      font-weight:900;
-      font-size:12px;
-      color:#111827;
-    }
+    .tag{ background:#f3f4f6; border:1px solid #e5e7eb; border-radius:999px; padding:7px 10px; font-weight:900; font-size:12px; color:#111827; }
 
     /* Layout */
     main{max-width:1100px;margin:14px auto 100px;padding:0 12px}
@@ -148,11 +120,7 @@
       padding:12px 12px;
       font-size:13px;
     }
-    h2.sectionTitle{
-      margin:18px 0 10px;
-      font-size:18px;
-      font-weight:900;
-    }
+    h2.sectionTitle{ margin:18px 0 10px; font-size:18px; font-weight:900; }
     .grid{
       display:grid;
       grid-template-columns:repeat(4, minmax(0,1fr));
@@ -167,164 +135,51 @@
       box-shadow:var(--shadow);
       border:1px solid rgba(15,23,42,.06);
       padding:12px;
-      display:flex;
-      flex-direction:column;
-      gap:10px;
+      display:flex; flex-direction:column; gap:10px;
     }
-    .card h3{
-      margin:0;
-      font-size:16px;
-      font-weight:900;
-    }
+    .card h3{ margin:0; font-size:16px; font-weight:900; }
     .desc{margin:0;color:var(--muted);font-size:12px;line-height:1.35}
-    .price{
-      font-weight:900;
-      color:var(--green);
-      font-size:14px;
-    }
+    .price{ font-weight:900; color:var(--green); font-size:14px; }
     .badges{display:flex;gap:8px;flex-wrap:wrap;min-height:20px}
-    .badge{
-      font-size:11px;
-      font-weight:900;
-      padding:5px 9px;
-      border-radius:999px;
-      border:1px solid #e5e7eb;
-      background:#f3f4f6;
-      color:#111827;
-    }
+    .badge{ font-size:11px; font-weight:900; padding:5px 9px; border-radius:999px; border:1px solid #e5e7eb; background:#f3f4f6; color:#111827; }
     .badge.bad{background:#fee2e2;border-color:#fecaca;color:#7f1d1d}
     .badge.warn{background:#fef9c3;border-color:#fde68a;color:#713f12}
-    .btn{
-      width:100%;
-      border:0;
-      border-radius:14px;
-      padding:12px 12px;
-      font-weight:900;
-      cursor:pointer;
-      background:var(--red);
-      color:#fff;
-    }
+    .btn{ width:100%; border:0; border-radius:14px; padding:12px 12px; font-weight:900; cursor:pointer; background:var(--red); color:#fff; }
     .btn:disabled{opacity:.55; cursor:not-allowed}
 
     /* Map */
-    .mapBox{
-      margin-top:18px;
-      background:#fff;
-      border-radius:18px;
-      box-shadow:var(--shadow);
-      border:1px solid rgba(15,23,42,.06);
-      overflow:hidden;
-    }
+    .mapBox{ margin-top:18px; background:#fff; border-radius:18px; box-shadow:var(--shadow); border:1px solid rgba(15,23,42,.06); overflow:hidden; }
     .mapHead{padding:12px 12px 0}
     .mapHead h3{margin:0;font-size:16px;font-weight:900}
     iframe{width:100%; height:260px; border:0}
 
     /* Floating cart button */
     .cartBtn{
-      position:fixed;
-      right:16px;
-      bottom:16px;
-      border:0;
-      border-radius:999px;
-      padding:12px 14px;
-      background:var(--green);
-      color:#fff;
-      font-weight:900;
-      cursor:pointer;
-      box-shadow:0 16px 34px rgba(0,0,0,.18);
-      display:flex;
-      align-items:center;
-      gap:10px;
-      z-index:50;
+      position:fixed; right:16px; bottom:16px;
+      border:0; border-radius:999px; padding:12px 14px;
+      background:var(--green); color:#fff; font-weight:900; cursor:pointer;
+      box-shadow:0 16px 34px rgba(0,0,0,.18); display:flex; align-items:center; gap:10px; z-index:50;
     }
-    .cartCount{
-      width:26px;height:26px;border-radius:999px;
-      background:rgba(255,255,255,.18);
-      display:grid;place-items:center;
-      font-weight:900;
-    }
+    .cartCount{ width:26px;height:26px;border-radius:999px; background:rgba(255,255,255,.18); display:grid;place-items:center; font-weight:900; }
 
     /* Cart modal */
-    .overlay{
-      position:fixed; inset:0;
-      background:rgba(0,0,0,.45);
-      display:none;
-      align-items:flex-end;
-      justify-content:center;
-      padding:14px;
-      z-index:60;
-    }
-    .modal{
-      width:min(680px, 100%);
-      background:#fff;
-      border-radius:22px;
-      box-shadow:0 20px 50px rgba(0,0,0,.22);
-      overflow:hidden;
-      border:1px solid rgba(15,23,42,.08);
-    }
-    .modalHead{
-      padding:12px 14px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      background:#fff;
-      border-bottom:1px solid #eee;
-    }
+    .overlay{ position:fixed; inset:0; background:rgba(0,0,0,.45); display:none; align-items:flex-end; justify-content:center; padding:14px; z-index:60; }
+    .modal{ width:min(680px, 100%); background:#fff; border-radius:22px; box-shadow:0 20px 50px rgba(0,0,0,.22); overflow:hidden; border:1px solid rgba(15,23,42,.08); }
+    .modalHead{ padding:12px 14px; display:flex; align-items:center; justify-content:space-between; gap:10px; background:#fff; border-bottom:1px solid #eee; }
     .modalHead b{font-size:16px}
-    .closeBtn{
-      border:0;border-radius:12px;
-      padding:10px 12px;
-      background:#f3f4f6;
-      cursor:pointer;
-      font-weight:900;
-    }
+    .closeBtn{ border:0;border-radius:12px; padding:10px 12px; background:#f3f4f6; cursor:pointer; font-weight:900; }
     .modalBody{padding:14px}
     .row{display:flex;gap:10px;flex-wrap:wrap}
     .field{flex:1;min-width:220px}
     label{display:block;font-size:12px;color:var(--muted);font-weight:900;margin-bottom:6px}
-    input,select,textarea{
-      width:100%;
-      padding:12px;
-      border:1px solid #e5e7eb;
-      border-radius:14px;
-      font-size:14px;
-      outline:none;
-    }
+    input,select,textarea{ width:100%; padding:12px; border:1px solid #e5e7eb; border-radius:14px; font-size:14px; outline:none; }
     textarea{min-height:80px;resize:vertical}
     .cartItems{margin-top:10px; display:flex; flex-direction:column; gap:10px}
-    .cartItem{
-      border:1px solid #eee;
-      border-radius:16px;
-      padding:10px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-    }
+    .cartItem{ border:1px solid #eee; border-radius:16px; padding:10px; display:flex; align-items:center; justify-content:space-between; gap:10px; }
     .qtyBox{display:flex;align-items:center;gap:8px}
-    .qtyBtn{
-      width:36px;height:36px;border-radius:12px;
-      border:1px solid #e5e7eb;background:#fff;
-      cursor:pointer;font-weight:900;
-    }
-    .totalLine{
-      margin-top:12px;
-      display:flex; align-items:center; justify-content:space-between;
-      font-weight:900;
-    }
-    .sendBtn{
-      margin-top:12px;
-      width:100%;
-      border:0;
-      border-radius:16px;
-      padding:14px 14px;
-      background:var(--green);
-      color:#fff;
-      font-weight:900;
-      cursor:pointer;
-      font-size:15px;
-    }
+    .qtyBtn{ width:36px;height:36px;border-radius:12px; border:1px solid #e5e7eb;background:#fff; cursor:pointer;font-weight:900; }
+    .totalLine{ margin-top:12px; display:flex; align-items:center; justify-content:space-between; font-weight:900; }
+    .sendBtn{ margin-top:12px; width:100%; border:0; border-radius:16px; padding:14px 14px; background:var(--green); color:#fff; font-weight:900; cursor:pointer; font-size:15px; }
     .sendBtn:disabled{opacity:.55;cursor:not-allowed}
     .small{font-size:12px;color:var(--muted)}
   </style>
@@ -361,7 +216,7 @@
       <div class="tags">
         <span class="tag">🍟 Retirada</span>
         <span class="tag">🛵 Entrega</span>
-        <span class="tag">📍  Rio Grande - RS</span>
+        <span class="tag">📍 Rio Grande - RS</span>
       </div>
     </div>
   </section>
@@ -452,12 +307,10 @@
     </div>
   </div>
 
-  <!-- Firebase (Compat) -->
+  <!-- Firebase (Compat) - APENAS UMA VEZ CADA -->
   <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore-compat.js"></script>
 
   <script>
     // =========================
@@ -472,8 +325,12 @@
       appId: "1:555443410907:web:76754b4bae7934cd58f9fe"
     };
     firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
     const db = firebase.firestore();
     const DOC = db.collection("public").doc("menu");
+
+    // login anônimo (precisa estar ativado no Authentication)
+    auth.signInAnonymously().catch(()=>{});
 
     // =========================
     // SEU WHATSAPP
@@ -485,14 +342,14 @@
     // =========================
     const PRODUCTS = [
       { id:"pancho_tradicional", cat:"pancho", nome:"Pancho Tradicional", preco:18, desc:"Pão, condimentos, salsicha defumada e queijo mussarela" },
-      { id:"pancho_mega", cat:"pancho", nome:"Pancho Mega", preco:20, desc:"Pão, condimentos, salsicha (extra) e queijo (extra)" },
+      { id:"pancho_mega",        cat:"pancho", nome:"Pancho Mega",        preco:20, desc:"Pão, condimentos, salsicha (extra) e queijo (extra)" },
       { id:"pancho_bacon_calabresa", cat:"pancho", nome:"Pancho Bacon e Calabresa", preco:22, desc:"Pão, condimentos, bacon/calabresa e queijo mussarela" },
-      { id:"pancho_coracao", cat:"pancho", nome:"Pancho Coração", preco:24, desc:"Pão, condimentos, coração e queijo mussarela" },
+      { id:"pancho_coracao",     cat:"pancho", nome:"Pancho Coração",     preco:24, desc:"Pão, condimentos, coração e queijo mussarela" },
 
-      { id:"coca", cat:"bebida", nome:"Coca-Cola", preco:6, desc:"Lata/Unidade" },
-      { id:"coca_zero", cat:"bebida", nome:"Coca-Cola Zero", preco:6, desc:"Lata/Unidade" },
-      { id:"fruki", cat:"bebida", nome:"Fruki", preco:6, desc:"Lata/Unidade" },
-      { id:"agua", cat:"bebida", nome:"Água Mineral", preco:4, desc:"Unidade" },
+      { id:"coca",       cat:"bebida", nome:"Coca-Cola",      preco:6, desc:"Lata/Unidade" },
+      { id:"coca_zero",  cat:"bebida", nome:"Coca-Cola Zero", preco:6, desc:"Lata/Unidade" },
+      { id:"fruki",      cat:"bebida", nome:"Fruki",          preco:6, desc:"Lata/Unidade" },
+      { id:"agua",       cat:"bebida", nome:"Água Mineral",   preco:4, desc:"Unidade" },
     ];
 
     // =========================
@@ -511,9 +368,7 @@
     const money = (v)=>v.toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
     const clamp = (n,min,max)=>Math.max(min,Math.min(max,n));
 
-    function nowBR(){
-      return new Date(); // navegador do cliente (ok)
-    }
+    function nowBR(){ return new Date(); }
 
     function minutesFromHHMM(s){
       if(!s || !/^\d\d:\d\d$/.test(s)) return null;
@@ -532,18 +387,13 @@
       const fechaM = minutesFromHHMM(conf.fecha);
       if(abreM==null || fechaM==null) return false;
 
-      // Fechado explícito
       if(abreM===0 && fechaM===0) return false;
 
       const curM = d.getHours()*60 + d.getMinutes();
-
-      // Caso normal (não cruza meia-noite)
       if(fechaM > abreM){
         return curM >= abreM && curM <= fechaM;
       }
-
-      // Cruza meia-noite (ex: 18:00 -> 01:00)
-      return (curM >= abreM) || (curM <= fechaM);
+      return (curM >= abreM) || (curM <= fechaM); // cruza meia-noite
     }
 
     function scheduleTextToday(){
@@ -552,7 +402,7 @@
       const conf = schedule?.[day];
       if(!conf) return "Horário de pedidos hoje: —";
       if(conf.abre==="00:00" && conf.fecha==="00:00") return "Hoje: fechado";
-      return `Horário de pedidos hoje: ${conf.abre} às ${conf.fecha}`;
+      return Horário de pedidos hoje: ${conf.abre} às ${conf.fecha};
     }
 
     // =========================
@@ -590,23 +440,22 @@
         badges.innerHTML = "";
 
         if(qtyStock <= 0){
-          badges.innerHTML += `<span class="badge bad">Esgotado</span>`;
+          badges.innerHTML += <span class="badge bad">Esgotado</span>;
           btn.disabled = true;
           btn.textContent = "Esgotado";
         }else{
           if(qtyStock <= 3){
-            badges.innerHTML += `<span class="badge warn">Últimas unidades</span>`;
+            badges.innerHTML += <span class="badge warn">Últimas unidades</span>;
           }
           btn.disabled = !isOpen;
           btn.textContent = isOpen ? "➕ Adicionar" : "Fora do horário";
         }
       });
 
-      el("cartBtn").disabled = false;
       const notice = el("notice");
       if(!isOpen){
         notice.style.display = "block";
-        notice.innerHTML = `<b>Estamos fechados no momento.</b> Fora do horário, não é possível adicionar itens nem finalizar pedidos.`;
+        notice.innerHTML = <b>Estamos fechados no momento.</b> Fora do horário, não é possível adicionar itens nem finalizar pedidos.;
       }else{
         notice.style.display = "none";
       }
@@ -615,30 +464,17 @@
 
       const dot = el("dot");
       const openText = el("openText");
-      if(isOpen){
-        dot.classList.add("open");
-        openText.textContent = "Aberto";
-      }else{
-        dot.classList.remove("open");
-        openText.textContent = "Fechado";
-      }
+      if(isOpen){ dot.classList.add("open"); openText.textContent = "Aberto"; }
+      else      { dot.classList.remove("open"); openText.textContent = "Fechado"; }
     }
 
     // =========================
     // CARRINHO
     // =========================
-    function cartCount(){
-      return Object.values(cart).reduce((a,b)=>a+b,0);
-    }
+    function cartCount(){ return Object.values(cart).reduce((a,b)=>a+b,0); }
 
-    function openCart(){
-      el("overlay").style.display="flex";
-      renderCart();
-    }
-    function closeCart(fromOverlay=false){
-      if(fromOverlay) el("overlay").style.display="none";
-      else el("overlay").style.display="none";
-    }
+    function openCart(){ el("overlay").style.display="flex"; renderCart(); }
+    function closeCart(){ el("overlay").style.display="none"; }
 
     function addToCart(id){
       if(!isOpen) return;
@@ -658,9 +494,8 @@
     function changeQty(id, delta){
       const current = Number(cart?.[id] ?? 0);
       const next = current + delta;
-      if(next <= 0){
-        delete cart[id];
-      }else{
+      if(next <= 0){ delete cart[id]; }
+      else{
         const qtyStock = Number(stock?.[id] ?? 0);
         cart[id] = clamp(next, 1, qtyStock);
       }
@@ -677,7 +512,7 @@
       const wrap = el("cartItems");
       const items = Object.keys(cart);
       if(items.length === 0){
-        wrap.innerHTML = `<div class="small">Seu carrinho está vazio.</div>`;
+        wrap.innerHTML = <div class="small">Seu carrinho está vazio.</div>;
         el("totalPrice").textContent = money(0);
         el("sendBtn").disabled = true;
         el("cartHint").textContent = "";
@@ -721,97 +556,107 @@
       if(!time){ alert("Selecione o horário do pedido."); return null; }
       if(type === "entrega" && !addr){ alert("Digite o endereço para entrega."); return null; }
 
-      let msg = `Olá! Quero fazer um pedido no *Pancho de Bagé*:%0A%0A`;
-      msg += `*Nome:* ${encodeURIComponent(name)}%0A`;
-      msg += `*Horário:* ${encodeURIComponent(time)}%0A`;
-      msg += `*Tipo:* ${encodeURIComponent(type)}%0A`;
-      if(type==="entrega") msg += `*Endereço:* ${encodeURIComponent(addr)}%0A`;
-      msg += `*Pagamento:* ${encodeURIComponent(pay)}%0A%0A`;
+      let msg = Olá! Quero fazer um pedido no *Pancho de Bagé*:%0A%0A;
+      msg += *Nome:* ${encodeURIComponent(name)}%0A;
+      msg += *Horário:* ${encodeURIComponent(time)}%0A;
+      msg += *Tipo:* ${encodeURIComponent(type)}%0A;
+      if(type==="entrega") msg += *Endereço:* ${encodeURIComponent(addr)}%0A;
+      msg += *Pagamento:* ${encodeURIComponent(pay)}%0A%0A;
 
-      msg += `*Itens:*%0A`;
-      let total = 0;
-      Object.keys(cart).forEach((id, i)=>{
+      msg += *Itens:*%0A;
+      let total = 0; let i=1;
+      Object.keys(cart).forEach(id=>{
         const p = PRODUCTS.find(x=>x.id===id);
         const q = cart[id];
         total += p.preco*q;
-        msg += `${i+1} - ${encodeURIComponent(p.nome)} (x${q}) - ${encodeURIComponent(money(p.preco*q))}%0A`;
+        msg += ${i++} - ${encodeURIComponent(p.nome)} (x${q}) - ${encodeURIComponent(money(p.preco*q))}%0A;
       });
-      msg += `%0A*Total:* ${encodeURIComponent(money(total))}%0A`;
+      msg += %0A*Total:* ${encodeURIComponent(money(total))}%0A;
 
-      if(notes){
-        msg += `%0A*Observações:* ${encodeURIComponent(notes)}%0A`;
-      }
+      if(notes){ msg += %0A*Observações:* ${encodeURIComponent(notes)}%0A; }
       return msg;
     }
 
-  async function sendOrder() {
-  if (!cart || cart.length === 0) {
-    alert("Carrinho vazio");
-    return;
-  }
+    function openWhatsAppOrder(){
+      const message = buildMessage();
+      if(!message) return;
+      window.open(https://wa.me/${WHATS}?text=${message}, "_blank");
+      // limpa carrinho após envio
+      cart = {};
+      el("cartCount").textContent = "0";
+      renderCart();
+      closeCart();
+    }
 
-  try {
-    await db.runTransaction(async (transaction) => {
-      const docRef = db.collection("public").doc("menu");
-      const snap = await transaction.get(docRef);
-
-      if (!snap.exists) throw "Estoque não encontrado no Firestore";
-
-      const data = snap.data();
-      const stock = { ...(data.stock || {}) };
-
-      // cart precisa ter { id, name, qty }
-      for (const item of cart) {
-        const have = Number(stock[item.id] ?? 0);
-        const need = Number(item.qty ?? 1);
-
-        if (have < need) {
-          throw Estoque insuficiente: ${item.name} (disp: ${have});
-        }
-      }
-
-      // desconta
-      for (const item of cart) {
-        const need = Number(item.qty ?? 1);
-        stock[item.id] = Number(stock[item.id]) - need;
-      }
-
-      transaction.update(docRef, { stock });
-    });
-
-    // só depois abre o WhatsApp
-    openWhatsAppOrder();
-
-  } catch (e) {
-    alert("❌ " + e);
-  }
-}
     // =========================
-    // FIRESTORE (puxa estoque/horário)
+    // FINALIZAR + BAIXA DE ESTOQUE (TRANSACTION)
     // =========================
-    async function loadMenu(){
-      const snap = await DOC.get();
-      const data = snap.data() || {};
+    async function sendOrder() {
+      const itemIds = Object.keys(cart);
+      if (itemIds.length === 0) {
+        alert("Carrinho vazio");
+        return;
+      }
+      try {
+        await db.runTransaction(async (transaction) => {
+          const snap = await transaction.get(DOC);
+          if (!snap.exists) throw "Estoque não encontrado no Firestore";
 
+          const data = snap.data() || {};
+          const currentStock = { ...(data.stock || {}) };
+
+          // valida estoque
+          for (const id of itemIds) {
+            const have = Number(currentStock[id] ?? 0);
+            const need = Number(cart[id] ?? 0);
+            if (need <= 0) continue;
+            if (have < need) {
+              const p = PRODUCTS.find(x=>x.id===id);
+              throw Estoque insuficiente: ${p ? p.nome : id} (disp: ${have});
+            }
+          }
+
+          // desconta
+          for (const id of itemIds) {
+            const need = Number(cart[id] ?? 0);
+            if (need > 0) currentStock[id] = Number(currentStock[id]) - need;
+          }
+
+          transaction.update(DOC, { stock: currentStock });
+        });
+
+        // se salvou, abre WhatsApp
+        openWhatsAppOrder();
+      } catch (e) {
+        alert("❌ " + e);
+      }
+    }
+
+    // =========================
+    // FIRESTORE (live)
+    // =========================
+    function applyMenuData(data){
       stock = data.stock || {};
       schedule = data.schedule || {};
       openOverride = !!data.openOverride;
-
       isOpen = isWithinSchedule();
-
       updateAllButtons();
       renderCart();
     }
 
+    async function loadMenu(){
+      const snap = await DOC.get();
+      if (snap.exists) applyMenuData(snap.data());
+    }
+
     function startRealtime(){
-      // Atualiza ao vivo quando você mudar no Firebase/Admin
-      DOC.onSnapshot(()=>{
-        loadMenu().catch(()=>{});
+      DOC.onSnapshot((snap)=>{
+        if (snap.exists) applyMenuData(snap.data());
       });
     }
 
     // =========================
-    // EXPO FUNÇÕES (botões HTML)
+    // EXPOSE (botões HTML)
     // =========================
     window.openCart = openCart;
     window.closeCart = closeCart;
