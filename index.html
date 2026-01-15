@@ -455,6 +455,9 @@
   <!-- Firebase (Compat) -->
   <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore-compat.js"></script>
 
   <script>
     // =========================
@@ -741,16 +744,48 @@
       return msg;
     }
 
-    function sendOrder(){
-      if(!isOpen){
-        alert("Fora do horário, não é possível finalizar.");
-        return;
-      }
-      const msg = buildMessage();
-      if(!msg) return;
-      window.open(`https://wa.me/${WHATS}?text=${msg}`, "_blank");
-    }
+  async function sendOrder() {
+  if (!cart || cart.length === 0) {
+    alert("Carrinho vazio");
+    return;
+  }
 
+  try {
+    await db.runTransaction(async (transaction) => {
+      const docRef = db.collection("public").doc("menu");
+      const snap = await transaction.get(docRef);
+
+      if (!snap.exists) throw "Estoque não encontrado no Firestore";
+
+      const data = snap.data();
+      const stock = { ...(data.stock || {}) };
+
+      // cart precisa ter { id, name, qty }
+      for (const item of cart) {
+        const have = Number(stock[item.id] ?? 0);
+        const need = Number(item.qty ?? 1);
+
+        if (have < need) {
+          throw Estoque insuficiente: ${item.name} (disp: ${have});
+        }
+      }
+
+      // desconta
+      for (const item of cart) {
+        const need = Number(item.qty ?? 1);
+        stock[item.id] = Number(stock[item.id]) - need;
+      }
+
+      transaction.update(docRef, { stock });
+    });
+
+    // só depois abre o WhatsApp
+    openWhatsAppOrder();
+
+  } catch (e) {
+    alert("❌ " + e);
+  }
+}
     // =========================
     // FIRESTORE (puxa estoque/horário)
     // =========================
